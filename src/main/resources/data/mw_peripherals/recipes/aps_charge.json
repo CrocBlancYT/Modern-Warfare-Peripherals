@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " #F",
+        "#G#",
+        "i# "
+    ],
+    "key": {
+        "#": "minecraft:clay_ball",
+        "F": "minecraft:flint",
+        "G": "minecraft:gunpowder",
+        "i": "minecraft:iron_ingot"
+    },
+    "result": {
+        "item": "create_aps:aps_charge",
+        "count": 1
+    }
+}

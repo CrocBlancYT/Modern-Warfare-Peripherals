@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "createbigcannons:he_shell",
+    "cbcmodernwarfare:he_mediumshell",
+
+    "createbigcannons:ap_shell",
+    "cbcmodernwarfare:aphe_mediumshell",
+    
+    "cbcmodernwarfare:hefrag_shell",
+    "cbcmodernwarfare:hef_mediumshell",
+
+    "cbcmodernwarfare:heap_shell",
+    "cbcmodernwarfare:heap_mediumshell",
+
+    "cbcmodernwarfare:canister_mediumshell",
+    
+    "tallyho:missile"
+  ]
+}

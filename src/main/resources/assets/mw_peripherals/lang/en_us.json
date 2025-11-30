@@ -1,0 +1,18 @@
+{
+  "itemGroup.mw_peripherals": "Modern Warfare Peripherals",
+  
+  "block.mw_peripherals.gyro_module": "Gyro. Module",
+  "block.mw_peripherals.maws": "M.A.W.S",
+  "block.mw_peripherals.raycaster": "Raycaster Module",
+  "block.mw_peripherals.weapons_manager": "Weapons Manager (Tallyho)",
+  
+  "block.mw_peripherals.aps_desert": "APS (Desert)",
+  "block.mw_peripherals.aps_parade": "APS (Parade)",
+  "block.mw_peripherals.aps_snow": "APS (Snow)",
+  "block.mw_peripherals.aps_4bo": "APS (4BO)",
+  "block.mw_peripherals.aps_charcoal": "APS (Charcoal)",
+  "block.mw_peripherals.aps_grizzly": "APS (Grizzly)",
+  "block.mw_peripherals.aps_gravel": "APS (Gravel)",
+
+  "item.mw_peripherals.aps_charge": "APS Charge"
+}

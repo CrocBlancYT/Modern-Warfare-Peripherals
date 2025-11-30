@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "createbigcannons:shot",
+    "createbigcannons:shrapnel_shell",
+    "createbigcannons:smoke_shell",
+    "cbcmodernwarfare:smoke_mediumshell"
+  ]
+}
