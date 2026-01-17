@@ -9,12 +9,15 @@ import net.croc.mw_peripherals.Main;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.NotNull;
 
 public class CannonMountPeripheral implements IPeripheral {
+    @NotNull
     private final Level level;
+    @NotNull
     private final BlockPos pos;
 
-    public CannonMountPeripheral(Level level, BlockPos blockPos) {
+    public CannonMountPeripheral(@NotNull Level level, @NotNull BlockPos blockPos) {
         //this.flap = be;
         this.level = level;
         this.pos = blockPos;
@@ -29,14 +32,20 @@ public class CannonMountPeripheral implements IPeripheral {
         return false;
     }
 
-    private static double getDisplayPitch(BlockEntity cannon) {
-        try { return (double) cannon.getClass().getMethod("getDisplayPitch").invoke(cannon);
-        } catch (Exception e) { return 0.0; }
+    private static float getDisplayPitch(BlockEntity cannon) {
+        try { return (float) cannon.getClass().getMethod("getDisplayPitch").invoke(cannon);
+        } catch (Exception e) {
+            Main.LOGGER.info(e.toString());
+            return 0.0f;
+        }
     }
 
-    private static double getDisplayYaw(BlockEntity cannon) {
-        try { return (double) cannon.getClass().getMethod("getDisplayYaw").invoke(cannon);
-        } catch (Exception e) { return 0.0; }
+    private static float getDisplayYaw(BlockEntity cannon) {
+        try { return (float) cannon.getClass().getMethod("getDisplayYaw").invoke(cannon);
+        } catch (Exception e) {
+            Main.LOGGER.info(e.toString());
+            return 0.0f;
+        }
     }
 
     private static void setPitch(BlockEntity cannon, double pitch) {
@@ -55,7 +64,7 @@ public class CannonMountPeripheral implements IPeripheral {
 
     private static void onRedstoneUpdate(BlockEntity cannon, Boolean a, Boolean b, Boolean c, Boolean d, int p) {
         try { cannon.getClass().getMethod("onRedstoneUpdate",
-                Boolean.class, Boolean.class, Boolean.class, Boolean.class, int.class
+                boolean.class, boolean.class, boolean.class, boolean.class, int.class
         ).invoke(cannon, a, b, c, d, p);
         } catch (Exception e) { Main.LOGGER.info(e.toString()); }
     }
@@ -70,32 +79,32 @@ public class CannonMountPeripheral implements IPeripheral {
         } catch (Exception e) { Main.LOGGER.info(e.toString()); }
     }
 
-    @LuaFunction
-    public final double getPitch() {
+    @LuaFunction(mainThread = true)
+    public float getPitch() {
         BlockEntity be = this.level.getBlockEntity(this.pos);
         return getDisplayPitch(be);
     }
 
-    @LuaFunction
-    public final double getYaw() {
+    @LuaFunction(mainThread = true)
+    public float getYaw() {
         BlockEntity be = this.level.getBlockEntity(this.pos);
         return getDisplayYaw(be);
     }
 
-    @LuaFunction
-    public final void setPitch(double pitch) {
+    @LuaFunction(mainThread = true)
+    public void setPitch(double pitch) {
         BlockEntity be = this.level.getBlockEntity(this.pos);
         setPitch(be, pitch);
     }
 
-    @LuaFunction
-    public final void setYaw(double yaw) {
+    @LuaFunction(mainThread = true)
+    public void setYaw(double yaw) {
         BlockEntity be = this.level.getBlockEntity(this.pos);
         setYaw(be, yaw);
     }
 
-    @LuaFunction
-    public final void assemble(boolean state) {
+    @LuaFunction(mainThread = true)
+    public void assemble(boolean state) {
         BlockEntity be = this.level.getBlockEntity(this.pos);
 
         if (state) {
@@ -107,8 +116,8 @@ public class CannonMountPeripheral implements IPeripheral {
         tick(be);
     }
 
-    @LuaFunction
-    public final void fire(int firepower) {
+    @LuaFunction(mainThread = true)
+    public void fire(int firepower) {
         BlockEntity be = this.level.getBlockEntity(this.pos);
 
         if (firepower > 0) {

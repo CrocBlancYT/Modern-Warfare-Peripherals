@@ -48,7 +48,7 @@ public class DatalinkPeripheral implements IPeripheral {
         return level.getServer().getPlayerList().getPlayerByName(username);
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final String status(String message) {
         String username = getLinkedPlayerName(this.level, this.pos);
         if (username == null) { return "No player linked"; }

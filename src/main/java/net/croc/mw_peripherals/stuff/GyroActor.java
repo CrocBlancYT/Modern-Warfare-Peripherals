@@ -15,6 +15,7 @@ public class GyroActor implements ShipForcesInducer {
 
     @Override
     public void applyForces(PhysShip physShip) {
+        physShip.
         while (!this.torques.isEmpty()) {
             Vector3dc torque = this.torques.poll();
             physShip.applyInvariantTorque(torque);
@@ -36,7 +37,7 @@ public class GyroActor implements ShipForcesInducer {
         return control;
     }
 
-    public static GyroActor get(Level level, BlockPos pos) {
+    public static GyroActor getOrCreate(Level level, BlockPos pos) {
         ServerShip ship = (ServerShip) VSGameUtilsKt.getShipManagingPos(level, pos);
         if (ship == null) { return null; }
         return getOrCreate(ship);

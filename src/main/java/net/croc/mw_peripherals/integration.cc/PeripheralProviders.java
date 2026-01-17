@@ -43,7 +43,6 @@ public class PeripheralProviders {
 
             if (be instanceof GyroBlockEntity) {
                 return LazyOptional.of(() -> new GyroscopePeripheral(level, blockPos, be));
-
             } else if (blockId.equals("mw_peripherals:raycaster")) {
                 return LazyOptional.of(() -> new RaycasterPeripheral(level, blockPos));
             }else if (blockId.equals("mw_peripherals:maws")) {
@@ -54,7 +53,6 @@ public class PeripheralProviders {
                 return LazyOptional.of(() -> new WeaponsManagerPeripheral(level, blockPos));
             }else if (be instanceof APSBlockEntity) {
                 return LazyOptional.of(() -> new APSPeripheral(level, blockPos));
-
             } else if (blockId.equals("createbigcannons:cannon_mount")) {
                 return LazyOptional.of(() -> new CannonMountPeripheral(level, blockPos));
             } else if (blockId.equals("cbcmodernwarfare:compact_mount")) {
