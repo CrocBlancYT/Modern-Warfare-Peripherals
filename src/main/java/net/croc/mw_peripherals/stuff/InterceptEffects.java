@@ -7,13 +7,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InterceptEffects {
@@ -22,7 +20,7 @@ public class InterceptEffects {
     private static void fragmentParticles(ServerLevel level, ServerPlayer player, Vec3 pos, Vec3 vel) {
         BlockPos blockPos = new BlockPos((int) pos.x(), (int) pos.y(), (int) pos.z());
         level.playSound(player, blockPos, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 1.2f, 0.7f);
-        
+
         Vec3 norm = vel.normalize();
         double pitch = Math.asin(norm.y());
         double yaw = Math.atan2(norm.z(), norm.x());
@@ -111,7 +109,7 @@ public class InterceptEffects {
         if (level.isClientSide()) return;
 
         List<ServerPlayer> players = getServerPlayersInRange((ServerLevel) level, APS.getBlockPos(), effectsDistance);
-        
+
         players.forEach((player) -> {
             explosionParticles((ServerLevel) level, player, projectile.getEyePosition());
         });

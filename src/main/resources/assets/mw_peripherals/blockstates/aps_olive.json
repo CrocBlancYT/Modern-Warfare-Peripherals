@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mw_peripherals:block/aps_olive",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "mw_peripherals:block/aps_olive",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "mw_peripherals:block/aps_olive",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mw_peripherals:block/aps_olive",
+      "y": 270
+    }
+  }
+}

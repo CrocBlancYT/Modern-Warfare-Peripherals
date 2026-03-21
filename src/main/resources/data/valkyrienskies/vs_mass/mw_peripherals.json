@@ -1,0 +1,15 @@
+[
+    { "block": "mw_peripherals:maws", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:weapons_manager", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:raycaster", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:radar_module", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:gyro_module", "mass": 600.0, "friction": 0.25 },
+    
+    { "block": "mw_peripherals:aps_desert", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:aps_parade", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:aps_snow", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:aps_4bo", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:aps_charcoal", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:aps_grizzly", "mass": 600.0, "friction": 0.25 },
+    { "block": "mw_peripherals:aps_gravel", "mass": 600.0, "friction": 0.25 }
+]

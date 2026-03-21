@@ -1,6 +1,5 @@
 package net.croc.mw_peripherals.stuff;
 
-import net.croc.mw_peripherals.Main;
 import net.croc.mw_peripherals.RegistryConfigs;
 import net.croc.mw_peripherals.RegistryTags;
 import net.minecraft.world.entity.Entity;

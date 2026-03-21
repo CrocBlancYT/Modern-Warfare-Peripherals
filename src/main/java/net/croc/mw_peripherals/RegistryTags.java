@@ -8,11 +8,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class RegistryTags {
     public static TagKey<EntityType<?>> KINETIC_ENERGY = create("mwp_kinetic");
+
     public static TagKey<EntityType<?>> CHEMICAL_ENERGY = create("mwp_chemical");
-    public static TagKey<EntityType<?>> MISSILE = create("mwp_missile");
 
     private static TagKey<EntityType<?>> create(String name) {
-        return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), new ResourceLocation(Main.MOD_ID, name));
+        return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), new ResourceLocation("mw_peripherals", name));
     }
 
     public static boolean isKinetic(Entity entity) {
@@ -23,9 +23,5 @@ public class RegistryTags {
         return entity.getType().is(CHEMICAL_ENERGY);
     }
 
-    public static boolean isMissile(Entity entity) {
-        return entity.getType().is(MISSILE);
-    }
-
-    public static void register() { }
+    public static void register() {}
 }

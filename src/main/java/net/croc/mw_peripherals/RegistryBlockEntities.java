@@ -1,30 +1,48 @@
 package net.croc.mw_peripherals;
 
-import net.croc.mw_peripherals.blocks.GyroBlockEntity;
+import net.croc.mw_peripherals.blocks.*;
+import net.croc.mw_peripherals.utils.BlockEntry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-
-import net.croc.mw_peripherals.blocks.APSBlockEntity;
-
-import java.util.HashMap;
-import java.util.Map;
+import edn.stratodonut.tallyho.AllBlocks;
 
 public class RegistryBlockEntities {
-    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY = Main.BLOCK_ENTITIES;
-    public static final Map<String, RegistryObject<BlockEntityType<?>>> BLOCK_ENTITIES = new HashMap<>();
-    
+    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = Main.BLOCK_ENTITIES;
+
+    public static RegistryObject<BlockEntityType<GyroBlockEntity>> GYRO_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<APSBlockEntity>> APS_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<JetEngineBlockEntity>> JET_ENGINE_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<RadarBlockEntity>> RADAR_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<FlareDispenserBlockEntity>> FLARE_DISPENSER_BLOCK_ENTITY;
+
+
     public static void register() {
-        RegistryObject<BlockEntityType<?>> GYRO_BLOCK_ENTITY = BLOCK_ENTITY.register("gyro_block_entity",() -> BlockEntityType.Builder.of(GyroBlockEntity::new,
-                        RegistryBlocks.BLOCKS.get("gyro_module").get())
-                .build(null));
+        GYRO_BLOCK_ENTITY = BLOCK_ENTITIES.register("gyro_block_entity",
+                () -> BlockEntityType.Builder.of(GyroBlockEntity::new,
+                                RegistryBlocks.GYRO_MODULE.getBlock().get())
+                        .build(null));
 
-        RegistryObject<BlockEntityType<?>> APS_BLOCK_ENTITY = BLOCK_ENTITY.register("aps_block_entity", () -> BlockEntityType.Builder.of(APSBlockEntity::new,
-                        RegistryBlocks.APS_VARIANT_BLOCKS.values().stream().map(RegistryObject::get).toArray(Block[]::new))
-                .build(null));
+        APS_BLOCK_ENTITY = BLOCK_ENTITIES.register("aps_block_entity",
+                () -> BlockEntityType.Builder.of(APSBlockEntity::new,
+                                RegistryBlocks.APS_VARIANTS.values().stream().map(BlockEntry::getBlock).map(RegistryObject::get).toArray(Block[]::new))
+                        .build(null));
 
-        BLOCK_ENTITIES.put("gyro_module", GYRO_BLOCK_ENTITY);
-        BLOCK_ENTITIES.put("aps", APS_BLOCK_ENTITY);
+        JET_ENGINE_BLOCK_ENTITY = BLOCK_ENTITIES.register("jet_engine_block_entity",
+                () -> BlockEntityType.Builder.of(JetEngineBlockEntity::new,
+                                RegistryBlocks.JET_ENGINE.getBlock().get())
+                        .build(null));
+
+        RADAR_BLOCK_ENTITY = BLOCK_ENTITIES.register("radar_block_entity",
+                () -> BlockEntityType.Builder.of(RadarBlockEntity::new,
+                                RegistryBlocks.RADAR_MODULE.getBlock().get())
+                        .build(null));
+
+        FLARE_DISPENSER_BLOCK_ENTITY = BLOCK_ENTITIES.register("flare_dispenser_block_entity",
+                () -> BlockEntityType.Builder.of(FlareDispenserBlockEntity::new,
+                                AllBlocks.FLARE_DISPENSER.get())
+                        .build(null));
     }
+
 }

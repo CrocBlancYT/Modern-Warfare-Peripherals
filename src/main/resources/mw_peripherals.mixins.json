@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.croc.mw_peripherals.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mw_peripherals.refmap.json",
+  "mixins": [
+    "CannonMountAccessor",
+    "MixinFlareDispenserBlock",
+    "MixinHatchBlock",
+    "MixinHatchBlockEntity"
+  ],
+  "client": [],
+  "server": []
+}
