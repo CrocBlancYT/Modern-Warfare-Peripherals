@@ -9,12 +9,9 @@ import net.croc.mw_peripherals.mixin.CannonMountAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.gen.Accessor;
-import rbasamoyai.createbigcannons.cannon_control.cannon_mount.CannonMountBlockEntity;
-import rbasamoyai.createbigcannons.cannon_control.contraption.AbstractMountedCannonContraption;
+import rbasamoyai.createbigcannons.cannon_control.cannon_mount.ExtendsCannonMount;
 import rbasamoyai.createbigcannons.cannon_control.contraption.MountedAutocannonContraption;
 import rbasamoyai.createbigcannons.cannon_control.contraption.PitchOrientedContraptionEntity;
-import riftyboi.cbcmodernwarfare.cannon_control.compact_mount.CompactCannonMountBlockEntity;
 
 public class CannonMountPeripheral implements IPeripheral {
     private final Level level;
@@ -41,39 +38,35 @@ public class CannonMountPeripheral implements IPeripheral {
     }
 
     public CannonMountAccessor getCannonMount() throws LuaException {
-        if (this.level.getBlockEntity(this.pos) instanceof CannonMountBlockEntity cannonMount) {
-            return (CannonMountAccessor) cannonMount;
-        }
-
-        if (this.level.getBlockEntity(this.pos) instanceof CompactCannonMountBlockEntity cannonMount) {
-            return (CannonMountAccessor) cannonMount;
+        if (this.level.getBlockEntity(this.pos) instanceof ExtendsCannonMount extension) {
+            return (CannonMountAccessor) extension.getCannonMount();
         }
 
         throw new LuaException("No cannon mount");
     }
 
     @LuaFunction(mainThread = true)
-    public double getPitch() throws LuaException {
+    public final double getPitch() throws LuaException {
         return getCannonMount().getCannonPitch();
     }
 
     @LuaFunction(mainThread = true)
-    public double getYaw() throws LuaException {
+    public final double getYaw() throws LuaException {
         return getCannonMount().getCannonYaw();
     }
 
     @LuaFunction(mainThread = true)
-    public double getMaxDepress() throws LuaException {
+    public final double getMaxDepress() throws LuaException {
         return getCannonMount().IgetMaxDepress();
     }
 
     @LuaFunction(mainThread = true)
-    public double getMaxElevate() throws LuaException {
+    public final double getMaxElevate() throws LuaException {
         return getCannonMount().IgetMaxElevate();
     }
 
     @LuaFunction(mainThread = true)
-    public void setPitch(double pitch) throws LuaException {
+    public final void setPitch(double pitch) throws LuaException {
         CannonMountAccessor cannon = getCannonMount();
         if (!isAutocannon(cannon)) throw new LuaException("setPitch only accessible to autocannons");
         cannon.IsetPitch((float) pitch);
@@ -81,7 +74,7 @@ public class CannonMountPeripheral implements IPeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public void setYaw(double yaw) throws LuaException {
+    public final void setYaw(double yaw) throws LuaException {
         CannonMountAccessor cannon = getCannonMount();
         if (!isAutocannon(cannon)) throw new LuaException("setYaw only accessible to autocannons");
         cannon.IsetPitch((float) yaw);
@@ -89,21 +82,21 @@ public class CannonMountPeripheral implements IPeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public void assemble() throws LuaException {
+    public final void assemble() throws LuaException {
         CannonMountAccessor cannon = getCannonMount();
         cannon.Iassemble();
         cannon.Itick();
     }
 
     @LuaFunction(mainThread = true)
-    public void disassemble() throws LuaException {
+    public final void disassemble() throws LuaException {
         CannonMountAccessor cannon = getCannonMount();
         cannon.Idisassemble();
         cannon.Itick();
     }
 
     @LuaFunction(mainThread = true)
-    public void fire(int firepower) throws LuaException {
+    public final void fire(int firepower) throws LuaException {
         CannonMountAccessor cannon = getCannonMount();
         if (firepower > 0) {
             cannon.IonRedstoneUpdate(false, false, true, false, firepower);

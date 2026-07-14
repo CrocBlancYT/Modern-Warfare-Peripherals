@@ -3,116 +3,99 @@ package net.croc.mw_peripherals.integration.computercraft.peripherals;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.Nullable;
 
-import edn.stratodonut.tallyho.missile.tracker.RadEmissionTracker;
+import edn.stratodonut.tallyho.missile.Target;
 import net.croc.mw_peripherals.blocks.RadarBlockEntity;
-import net.croc.mw_peripherals.integration.computercraft.LuaRotation;
 import net.croc.mw_peripherals.integration.computercraft.LuaUtils;
+import net.croc.mw_peripherals.integration.tallyho.RadarSource;
+import net.croc.mw_peripherals.integration.tallyho.TargetSolutions;
+import net.croc.mw_peripherals.integration.tallyho.tracker.RadTracker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import org.joml.Quaterniond;
-import org.joml.Vector3d;
-import org.joml.Vector3dc;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
-import org.joml.primitives.AABBdc;
-import org.valkyrienskies.core.api.ships.Ship;
-import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 public class RadarPeripheral implements IPeripheral {
     private final Level level;
 
     private final BlockPos pos;
-
     private final RadarBlockEntity blockEntity;
+
+    public final RadarSource.Transmitter transmitter;
+    public final RadarSource.Receiver receiver;
 
     public String getType() {
         return "radar";
     }
 
     public boolean equals(@Nullable IPeripheral iPeripheral) {
-        return false;
+        return (this.level != null && this.level.getBlockEntity(this.pos) instanceof RadarBlockEntity);
     }
 
     public RadarPeripheral(Level level, BlockPos blockPos) {
         this.level = level;
         this.pos = blockPos;
-        this.blockEntity = (RadarBlockEntity)level.getBlockEntity(blockPos);
+        this.blockEntity = (RadarBlockEntity) level.getBlockEntity(blockPos);
+
+        this.transmitter = this.blockEntity.getTransmitter();
+        this.receiver = this.blockEntity.getReceiver();
     }
 
-    private HashMap<String, ?> formatShip(Ship ship, Quaterniond rot) {
-        HashMap<String, Object> output_ship = new HashMap<>();
-        output_ship.put("rotation", new LuaRotation(rot));
-        AABBdc ship_area = ship.getWorldAABB();
-        double size_x = ship_area.maxX() - ship_area.minX();
-        double size_y = ship_area.maxY() - ship_area.minY();
-        double size_z = ship_area.maxZ() - ship_area.minZ();
-        double size = Math.sqrt(size_x * size_x + size_y * size_y + size_z * size_z);
-        output_ship.put("size", (size));
-        double speed = ship.getVelocity().length();
-        output_ship.put("speed", (speed));
-        return output_ship;
-    }
-
-    public static final double DISH_FOV = 45D;
-    public static final double MIN_DISTANCE = 10D;
-
-    public void emitRadOnScan(double distance) {
-        RadEmissionTracker.emit(this.level, this.pos, (distance > 0.0D) ? (int)distance : 200000);
-    }
+    public static final double DISH_FOV = 22;
+    public static final double maxRange = 600;
 
     @LuaFunction
-    public ArrayList<HashMap<String, ?>> scan(double distance) {
-        emitRadOnScan(distance);
+    public final ArrayList<?> scan() {
+        ArrayList<Map<String, Double>> output = new ArrayList<>();
 
-        Vector3d dir = this.blockEntity.getRadarDirection();
-        Vector3f radar_pos = this.pos.getCenter().toVector3f();
+        TargetSolutions solutions = this.blockEntity.pulse();
+        if (solutions == null) return null;
 
-        ArrayList<HashMap<String, ?>> output = new ArrayList<>();
-
-        Ship current_ship = VSGameUtilsKt.getShipObjectManagingPos(this.level, this.pos);
-        if (current_ship != null) {
-            radar_pos = current_ship.getShipToWorld().transformPosition( radar_pos.get(new Vector3d()) ).get(new Vector3f());
-        }
-        AABB area = (new AABB(new BlockPos((int) radar_pos.x,(int) radar_pos.y,(int) radar_pos.z))).inflate(distance);
-
-        for (Ship ship : VSGameUtilsKt.getShipsIntersecting(this.level, area)) {
-            Vector3d ship_pos = ship.getWorldAABB().center(new Vector3d());
-            Vector3d radar_to_ship = ship_pos.sub(radar_pos);
-
-            double angle = radar_to_ship.angle(dir);
-            float degrees = (float)Math.toDegrees(angle);
-
-            Quaterniond rot = dir.rotationTo(radar_to_ship, new Quaterniond());
-            if (radar_to_ship.length() >= MIN_DISTANCE && degrees <= DISH_FOV) output.add(formatShip(ship, rot));
+        for (Target<?> target : solutions.resolve()) {
+            output.add(LuaUtils.toLua(target.position()));
         }
 
         return output;
     }
 
     @LuaFunction
-    public void setYawSpeed(double yawing) {
+    public final double getMaxRange() { return maxRange; }
+
+    @LuaFunction
+    public final void setYawSpeed(double yawing) {
         this.blockEntity.setYawSpeed((float)yawing);
     }
 
     @LuaFunction
-    public double getYaw() {
+    public final double getYaw() {
         return this.blockEntity.getYaw();
     }
 
     @LuaFunction
-    public void setPitchSpeed(double pitching) {
+    public final void setPitchSpeed(double pitching) {
         this.blockEntity.setPitchSpeed((float)pitching);
     }
 
     @LuaFunction
-    public double getPitch() {
+    public final double getPitch() {
         return this.blockEntity.getPitch();
     }
 
     @LuaFunction
-    public double getDishFOV() { return DISH_FOV; }
+    public final double getPitchLimit() {
+        return this.blockEntity.PITCH_LIMIT;
+    }
+
+    @LuaFunction
+    public final double getDishFOV() { return DISH_FOV; }
+
+    @LuaFunction
+    public final double getMaxPitchSpeed() {
+        return this.blockEntity.PITCH_SPEED_LIMIT;
+    }
+
+    @LuaFunction
+    public final double getMaxYawSpeed() {
+        return this.blockEntity.YAW_SPEED_LIMIT;
+    }
 }

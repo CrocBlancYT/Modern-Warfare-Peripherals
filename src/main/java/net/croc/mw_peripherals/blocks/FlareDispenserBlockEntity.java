@@ -1,13 +1,23 @@
 package net.croc.mw_peripherals.blocks;
 
+import edn.stratodonut.tallyho.entity.FlareEntity;
 import net.croc.mw_peripherals.RegistryBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.Vec3;
+import org.valkyrienskies.core.api.ships.ServerShip;
+import org.valkyrienskies.core.api.ships.Ship;
+import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 public class FlareDispenserBlockEntity extends BlockEntity {
     private int flares = 50;
+
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public FlareDispenserBlockEntity(BlockPos pos, BlockState state) {
         super(RegistryBlockEntities.FLARE_DISPENSER_BLOCK_ENTITY.get(), pos, state);
@@ -43,5 +53,18 @@ public class FlareDispenserBlockEntity extends BlockEntity {
 
     public int getFlares() {
         return this.flares;
+    }
+
+    public void triggerFlare() {
+        if (!this.removeFlare()) { return; }
+
+        BlockPos pos = this.getBlockPos();
+        Ship s = VSGameUtilsKt.getShipManagingPos(level, pos);
+
+        if (s instanceof ServerShip serverShip) {
+            Direction facing = this.getBlockState().getValue(FACING);
+            FlareEntity.dropFromShip(level, serverShip, pos,
+                    Vec3.atLowerCornerOf(facing.getNormal()).scale(2.0D));
+        }
     }
 }

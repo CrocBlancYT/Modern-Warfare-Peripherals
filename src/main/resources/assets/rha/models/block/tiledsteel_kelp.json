@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "rha:block/tiledsteelkelp",
+    "up": "rha:block/tiledsteelkelp",
+    "north": "rha:block/tiledsteelkelp",
+    "east": "rha:block/tiledsteelkelp",
+    "south": "rha:block/tiledsteelkelp",
+    "west": "rha:block/tiledsteelkelp",
+    "particle": "rha:block/tiledsteelkelp"
+  },
+  "render_type": "solid"
+}

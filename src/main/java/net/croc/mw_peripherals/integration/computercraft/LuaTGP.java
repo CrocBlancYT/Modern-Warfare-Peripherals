@@ -5,7 +5,6 @@ import dan200.computercraft.api.lua.LuaFunction;
 import edn.stratodonut.tallyho.camera.entity.TargetingPodEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +13,8 @@ import java.util.Map;
 import static net.croc.mw_peripherals.integration.computercraft.LuaUtils.toLua;
 
 public class LuaTGP {
+    public static final float MAX_RANGE_FIND = 500;
+
     private final TargetingPodEntity tgp;
 
     public LuaTGP(TargetingPodEntity tgp, Level level, BlockPos pos) {
@@ -36,15 +37,34 @@ public class LuaTGP {
     @LuaFunction
     public boolean isTGP() { return true; }
 
-    @LuaFunction
-    public void turnX(double x) {
+    @LuaFunction(mainThread = true)
+    public void turnByX(double x) {
         this.tgp.turnView(0, x);
     }
 
-    @LuaFunction
-    public void turnY(double y) {
+    @LuaFunction(mainThread = true)
+    public void turnByY(double y) {
         this.tgp.turnView(y, 0);
     }
+
+    @LuaFunction
+    public float getXRot() {
+        return this.tgp.getXRot();
+    }
+
+    @LuaFunction
+    public float getYRot() { return this.tgp.getYRot(); }
+
+    @LuaFunction(mainThread = true)
+    public double rangeFind() {
+        return this.tgp.pick(MAX_RANGE_FIND, 1, false).distanceTo(this.tgp);
+    }
+
+    @LuaFunction
+    public double maxRangeFind() { return MAX_RANGE_FIND; }
+
+    @LuaFunction
+    public Map<String, ?> getLookAngle() { return toLua(this.tgp.getLookAngle()); }
 
     @LuaFunction
     public Map<String, ?> getPosition() {
@@ -56,7 +76,7 @@ public class LuaTGP {
         return this.tgp.getUUID().toString();
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public void setMode(String name) throws LuaException {
         TargetingPodEntity.TGP_MODE mode = MODES.get(name);
 
@@ -78,11 +98,16 @@ public class LuaTGP {
         return NAMES.values().stream().toList();
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public void setLazeState(boolean targetState) {
         if (this.tgp.isDesignating() != targetState) {
             this.tgp.toggleLazeMode();
         }
+    }
+
+    @LuaFunction(mainThread = true)
+    public void toggleLazeState() {
+        this.tgp.toggleLazeMode();
     }
 
     @LuaFunction

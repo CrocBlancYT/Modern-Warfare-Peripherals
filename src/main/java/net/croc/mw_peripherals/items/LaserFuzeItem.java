@@ -98,11 +98,7 @@ public class LaserFuzeItem extends FuzeItem {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable("Laser trigger distance: %s blocks", getLaserMaxDistance(pStack.getOrCreateTag())).withStyle(ChatFormatting.GRAY));
 
-        if (Screen.hasShiftDown()) {
-            pTooltipComponents.add(Component.translatable("Min distance: %s", MIN_DISTANCE).withStyle(ChatFormatting.GRAY));
-            pTooltipComponents.add(Component.translatable("Max distance: %s", MAX_DISTANCE).withStyle(ChatFormatting.GRAY));
-        } else {
-            pTooltipComponents.add(Component.translatable("Hold [Shift] to see more").withStyle(ChatFormatting.GRAY));
-        }
+        pTooltipComponents.add(Component.translatable("Minimum Distance: %s", MIN_DISTANCE).withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(Component.translatable("Maximum Distance: %s", MAX_DISTANCE).withStyle(ChatFormatting.GRAY));
     }
 }

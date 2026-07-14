@@ -28,7 +28,7 @@ public class RemoteFuzeItem extends FuzeItem {
     public RemoteFuzeItem(Item.Properties properties) {
         super(properties);
     }
-
+    
     private static final AABB UNIT_CUBE = AABB.unitCubeFromLowerCorner(Vec3.ZERO);
     private static void drawOutline(Level level, BlockPos pos, int color) {
         BlockState state = level.getBlockState(pos);
@@ -68,7 +68,7 @@ public class RemoteFuzeItem extends FuzeItem {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         if (pStack.getOrCreateTag().contains("controller")) {
             BlockPos pos = NbtUtils.readBlockPos(pStack.getOrCreateTag().getCompound("controller"));
-            pTooltipComponents.add(Component.translatable("Linked to: %s", pos).withStyle(ChatFormatting.GRAY));
+            pTooltipComponents.add(Component.translatable("Linked to: {x=%s y=%s z=%s}", pos.getX(), pos.getY(), pos.getZ()).withStyle(ChatFormatting.GRAY));
         } else {
             pTooltipComponents.add(Component.translatable("Not linked").withStyle(ChatFormatting.GRAY));
         }

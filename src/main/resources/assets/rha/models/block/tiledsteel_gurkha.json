@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "rha:block/tiledsteelgurkha",
+    "up": "rha:block/tiledsteelgurkha",
+    "north": "rha:block/tiledsteelgurkha",
+    "east": "rha:block/tiledsteelgurkha",
+    "south": "rha:block/tiledsteelgurkha",
+    "west": "rha:block/tiledsteelgurkha",
+    "particle": "rha:block/tiledsteelgurkha"
+  },
+  "render_type": "solid"
+}

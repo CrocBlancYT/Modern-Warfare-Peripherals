@@ -2,24 +2,20 @@ package net.croc.mw_peripherals.integration.computercraft.peripherals;
 
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import edn.stratodonut.tallyho.entity.MountedMissileEntity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import edn.stratodonut.tallyho.entity.MountedMissileEntity;
-import edn.stratodonut.tallyho.missile.MotorComponent;
-import edn.stratodonut.tallyho.missile.guid.IRSeeker;
-import edn.stratodonut.tallyho.missile.motor.RocketMotor;
-import edn.stratodonut.tallyho.missile.motor.RocketMotorNoLift;
-import net.croc.mw_peripherals.RegistryTags;
+import net.croc.mw_peripherals.entity.MountedPodEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 public class MAWSPeripheral implements IPeripheral {
     private static final int maxRange = 100;
@@ -28,62 +24,52 @@ public class MAWSPeripheral implements IPeripheral {
 
     private final BlockPos pos;
 
+    private static final double MAX_RANGE = 100.0D;
+
+    public static final int HOT_LAUNCH_DURATION = 30;
+
     public MAWSPeripheral(Level level, BlockPos blockPos) {
-        this.level = level;
-        this.pos = blockPos;
+      this.level = level;
+      this.pos = blockPos;
     }
 
     @Nonnull
     public String getType() {
-        return "maws";
+      return "maws";
     }
 
     public boolean equals(@Nullable IPeripheral iPeripheral) {
-        return false;
+      return false;
     }
-
-    private static final double MAX_RANGE = 100D;
-
-    public List<MountedMissileEntity> detectActiveMissiles(Level level, BlockPos pos, double range) {
-        double clampedRange = range;
-
-        if (clampedRange < 0.0D)
-            clampedRange = 0.0D;
-
-        if (clampedRange > MAX_RANGE)
-            clampedRange = MAX_RANGE;
-
-        AABB box = (new AABB(pos)).inflate(clampedRange);
-        List<Entity> entities = level.getEntities(null, box);
-        List<MountedMissileEntity> missiles = new ArrayList<>();
-
-        entities.forEach(entity -> {
-            if (entity instanceof MountedMissileEntity missile) {
-                if (missile.isDeployed()) {
-                    missiles.add(missile);
-                }
-            }
-        });
-
-        return missiles;
-    }
-
-    public static final int HOT_LAUNCH_DURATION = 30;
 
     public static boolean isDetectable(MountedMissileEntity missile) {
-        if (missile.getMotor() instanceof RocketMotor && missile.getTicksSinceLaunch() < HOT_LAUNCH_DURATION) return true;
-        if (missile.getMotor() instanceof RocketMotorNoLift && missile.getTicksSinceLaunch() < HOT_LAUNCH_DURATION) return true;
-        if (missile.getGuidance() instanceof IRSeeker) return true;
+        if (missile.getMotor() instanceof edn.stratodonut.tallyho.missile.motor.RocketMotor && missile.getTicksSinceLaunch() < 30)
+            return true;
+        if (missile.getMotor() instanceof edn.stratodonut.tallyho.missile.motor.RocketMotorNoLift && missile.getTicksSinceLaunch() < 30)
+            return true;
         return false;
     }
-
     @LuaFunction
-    public final ArrayList<String> detect(double range) {
-        ArrayList<String> output = new ArrayList<>();
+    public ArrayList<HashMap<?, ?>> detect() {
+        ArrayList<HashMap<?, ?>> output = new ArrayList<>();
 
-        detectActiveMissiles(this.level, this.pos, range).forEach(missile -> {
-            if (isDetectable(missile)) {
-                output.add(missile.getUUID().toString());
+        Vec3 worldPos = VSGameUtilsKt.toWorldCoordinates(this.level, this.pos.getCenter());
+
+        AABB box = new AABB(worldPos, worldPos).inflate(100D);
+
+        List<Entity> entities = this.level.getEntities(null, box);
+
+        entities.forEach(entity -> {
+            if (entity instanceof MountedMissileEntity missile && missile.isDeployed() && isDetectable(missile)
+                    && !(entity instanceof MountedPodEntity)) {
+                HashMap<Object, Object> lua_missile = new HashMap<>();
+
+                lua_missile.put("x", missile.getX());
+                lua_missile.put("y", missile.getY());
+                lua_missile.put("z", missile.getZ());
+                lua_missile.put("uuid", missile.getUUID().toString());
+
+                output.add(lua_missile);
             }
         });
 

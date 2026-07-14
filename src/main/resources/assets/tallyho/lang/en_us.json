@@ -27,23 +27,58 @@
 
     "item.tallyho.snakeye" : "Mk 82 'Snakeye' 500lb",
     "item.tallyho.m64" : "AN-M64 500lb",
-    "item.tallyho.rockeye" : "CBU-100 'Rockeye' (HE)",
+    "item.tallyho.rockeye" : "CBU-100 'Rockeye'",
     "item.tallyho.cbu87" : "CBU-87 (HEAT)",
     "item.tallyho.mk77" : "Mk 77 (Incendiary)",
     "item.tallyho.gbu12" : "GBU-12 Paveway II",
     "item.tallyho.gbu24" : "GBU-24 Paveway III",
     "item.tallyho.agm88" : "AGM-88 HARM",
-    "item.tallyho.tow2a" : "TOW 2A (HEAT)",
-    "item.tallyho.tow2b" : "TOW 2B (HEAT)",
-    "item.tallyho.towbb" : "TOW BB (HE)",
-    "item.tallyho.fim92e" : "FIM-92E (HE)",
+    "item.tallyho.tow2a" : "BGM-71E TOW 2A (HEAT)",
+    "item.tallyho.tow2b" : "BGM-71F TOW 2B (HEAT)",
+    "item.tallyho.towbb" : "BGM-71F TOW BB (HE)",
+    "item.tallyho.fim92e" : "FIM-92E",
     "item.tallyho.agm114b" : "AGM-114B Hellfire (HEAT)",
     "item.tallyho.agm114m" : "AGM-114M Hellfire (HE)",
-    "item.tallyho.apkws" : "AGR-20 (APKWS II) (HEAT)",
-    "item.tallyho.katyusha" : "RS-132 Katyusha (HE)",
+    "item.tallyho.apkws" : "AGR-20 APKWS II (HEAT)",
+    "item.tallyho.katyusha" : "RS-132 Katyusha",
 
-    "item.tallyho.type23sneb" : "Type 23 SNEB (HEAT)",
     "item.tallyho.r73archer" : "Vympel R-73",
+    "item.tallyho.r73e" : "Vympel R-73E",
+
+    "item.tallyho.r511" : "R511",
+    "item.tallyho.r530" : "R530",
+    "item.tallyho.super530d" : "Super 530D",
+    "item.tallyho.r550_magic1" : "R550 Magic I",
+    "item.tallyho.r550_magic2" : "R550 Magic II",
+
+    "item.tallyho.aa20" : "AA-20 Nord",
+    "item.tallyho.as20" : "AS-20 Nord",
+    "item.tallyho.as30" : "AS-30 Nord",
+    "item.tallyho.as30l" : "AS-30L",
+
+    "item.tallyho.m57" : "AN-M57 250lb",
+    "item.tallyho.m65" : "AN-M65 1000lb",
+    "item.tallyho.aim7e2" : "AIM-7E-2 'Sparrow'",
+
+    "item.tallyho.spike_lr2" : "Spike LR2",
+    "item.tallyho.9k112_kobra" : "9K112 Kobra",
+
+    "item.tallyho.aim9b" : "AIM-9B",
     "item.tallyho.aim9lima" : "AIM-9L (Gray)",
-    "item.tallyho.aim9lima_tan" : "AIM-9L (Tan)"
+    "item.tallyho.aim9lima_tan" : "AIM-9L (Tan)",
+    "item.tallyho.aim9mike" : "AIM-9M",
+    "item.tallyho.aim9x" : "AIM-9X Block II",
+
+    "item.tallyho.iris_t" : "AIM-2000 IRIS-T",
+    "item.tallyho.mica_em" : "MICA-RF/EM",
+
+    "item.tallyho.hvar" : "HVAR",
+    "item.tallyho.type23sneb" : "Type 23 SNEB",
+
+    "item.tallyho.gun_pod" : "Mounted Gun Pod",
+    "item.tallyho.fuel_tank" : "Paper Drop-Tank (Diesel)",
+    "item.tallyho.type23_rocket_pod" : "Matra Type 116 Rocket Pod",
+
+    "item.tallyho.agm65" : "AGM-65 'Maverick'",
+    "item.tallyho.gbu39" : "GBU-39 SDB"
 }

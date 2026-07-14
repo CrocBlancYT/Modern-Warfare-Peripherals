@@ -1,0 +1,70 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "mw_peripherals:block/trophy_aps",
+		"particle": "mw_peripherals:block/trophy_aps"
+	},
+	"elements": [
+		{
+			"name": "charge",
+			"from": [6, 6, 5.4],
+			"to": [10, 11, 6.5],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8.5, 8.25]},
+			"faces": {
+				"north": {"uv": [12.5, 0.5, 14.5, 3], "texture": "#0"},
+				"east": {"uv": [12.5, 0.5, 13, 3], "texture": "#0"},
+				"south": {"uv": [12.5, 0.5, 14.5, 3], "texture": "#0"},
+				"west": {"uv": [14, 0.5, 14.5, 3], "texture": "#0"},
+				"up": {"uv": [12.5, 0.5, 14.5, 1], "texture": "#0"},
+				"down": {"uv": [14.5, 2.5, 12.5, 3], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 1, 0],
+			"scale": [0.33, 0.33, 0.33]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 1, 0],
+			"scale": [0.33, 0.33, 0.33]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 2, 0],
+			"scale": [0.85, 0.85, 0.85]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 2, 0],
+			"scale": [0.85, 0.85, 0.85]
+		},
+		"ground": {
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [19, 135, 0],
+			"translation": [0, 2, 0]
+		},
+		"head": {
+			"translation": [0, 13, 0]
+		},
+		"on_shelf": {
+			"rotation": [0, -180, 0]
+		}
+	},
+	"groups": [
+		{
+			"name": "uncolored",
+			"origin": [8, 8.5, 8.25],
+			"scope": 0,
+			"color": 0,
+			"children": [0]
+		}
+	]
+}

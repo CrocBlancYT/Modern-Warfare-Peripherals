@@ -1,0 +1,25 @@
+tfmg:lead_nugget
+tfmg:aluminium_sheet
+tfmg:circuit_board
+tfmg:magnetic_alloy_ingot
+tfmg:steel_mechanism
+createbigcannons:packed_guncotton
+createbigcannons:proximity_fuze
+createbigcannons:shot_balls
+tfmg:plastic_sheet
+tfmg:cart_iron_sheet
+tfmg:rubber_sheet
+
+Shaped Charge Warhead
+Fragmentation Warhead
+
+IR Seeker
+EM Receiver
+EM Transmitter
+Laser Receiver
+IIR Camera
+
+Flight Computer
+
+Cable
+MCLOS Joystick

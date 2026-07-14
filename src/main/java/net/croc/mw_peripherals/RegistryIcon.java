@@ -86,7 +86,7 @@ public class RegistryIcon {
         }
     }
 
-    private static NativeImage loadNativeImage(ResourceLocation location) throws IOException {
+    public static NativeImage loadNativeImage(ResourceLocation location) throws IOException {
         Resource resource = Minecraft.getInstance().getResourceManager().getResource(location).orElseThrow(() -> new FileNotFoundException(location.toString()));
         InputStream stream = resource.open();
         try {

@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "rha:block/slashedsteelgurkhatex",
+    "up": "rha:block/slashedsteelgurkhatex",
+    "north": "rha:block/slashedsteelgurkhatex",
+    "east": "rha:block/slashedsteelgurkhatex",
+    "south": "rha:block/slashedsteelgurkhatex",
+    "west": "rha:block/slashedsteelgurkhatex",
+    "particle": "rha:block/slashedsteelgurkhatex"
+  },
+  "render_type": "solid"
+}

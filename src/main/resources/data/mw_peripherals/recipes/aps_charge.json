@@ -12,7 +12,7 @@
         "i": "minecraft:iron_ingot"
     },
     "result": {
-        "item": "create_aps:aps_charge",
+        "item": "mw_peripherals:aps_charge",
         "count": 1
     }
 }

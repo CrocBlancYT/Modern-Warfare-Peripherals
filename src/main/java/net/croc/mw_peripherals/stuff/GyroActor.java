@@ -1,9 +1,11 @@
 package net.croc.mw_peripherals.stuff;
 
+import net.croc.mw_peripherals.Main;
 import net.croc.mw_peripherals.RegistryConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Math;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 import org.valkyrienskies.core.api.ships.PhysShip;
@@ -12,63 +14,102 @@ import org.valkyrienskies.core.api.ships.ShipForcesInducer;
 import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.BiConsumer;
 
 public class GyroActor implements ShipForcesInducer {
-    private static double clamp(double min, double number, double max) {
-        if (number > max) return max;
-        if (number < min) return min;
-        return number;
+    private final HashMap<BlockPos, Controller> controllers;
+
+    public GyroActor() {
+        this.controllers = new HashMap<>();
     }
 
-    static class Gyro {
-        private Vector3d torque;
-        private int usesLeft;
+    public static final int MAX_FORCE = 12500;
 
-        public void consume() {
-            this.usesLeft--;
+    public Vector3d clamp(Vector3d v) {
+        return new Vector3d(
+                Math.clamp(-MAX_FORCE, MAX_FORCE, v.x),
+                Math.clamp(-MAX_FORCE, MAX_FORCE, v.y),
+                Math.clamp(-MAX_FORCE, MAX_FORCE, v.z)
+        );
+    }
+
+    public class Controller {
+        private BlockPos from;
+        private BiConsumer<PhysShip, Integer> routine;
+        private int clock;
+
+        public Controller(BlockPos from) {
+            this.from = from;
+            this.routine = (s, c) -> {};
+            this.clock = 0;
+            controllers.put(from, this);
         }
 
-        public boolean isEmpty() {
-            return (this.usesLeft <= 0);
+        public void discard() {
+            controllers.remove(this.from);
         }
 
-        public Gyro(int usesLeft, Vector3d newTorque) {
-            double max_torque = RegistryConfigs.Config.GYRO_MAX_TORQUE.get();
+        final static double dT = 1 / 60D;
 
-            this.usesLeft = usesLeft;
-            this.torque = new Vector3d(
-                    clamp(-max_torque, newTorque.x, max_torque),
-                    clamp(-max_torque, newTorque.y, max_torque),
-                    clamp(-max_torque, newTorque.z, max_torque)
-            );
+        public void withImpulse(Vec3 torque, double duration) {
+            final int physTicks = (int) (duration * 60D);
+            final Vector3d dImpulse = torque.scale(dT / duration).toVector3f().get(new Vector3d());
+
+            this.routine = (physShip, clock) -> {
+                if (clock > physTicks) {
+                    this.discard();
+                } else {
+                    physShip.applyRotDependentForce(clamp(dImpulse));
+                }
+            };
+        }
+
+        public void withTorque(Vec3 torque) {
+            final Vector3d dImpulse = torque.scale(dT).toVector3f().get(new Vector3d());
+
+            this.routine = (physShip, clock) -> {
+                physShip.applyRotDependentForce(clamp(dImpulse));
+            };
+        }
+
+        public void withTargetOmega(Vec3 targetOmega, double strength) {
+            final Vector3d to_omega = targetOmega.toVector3f().get(new Vector3d());
+
+            this.routine = (physShip, clock) -> {
+                Vector3d from_omega = (Vector3d) ((PhysShipImpl) physShip).getPoseVel().getOmega();
+
+                physShip.applyInvariantTorque(clamp(to_omega.sub(from_omega).mul(strength)));
+            };
+        }
+
+        public void run(PhysShip physShip) {
+            this.routine.accept(physShip, this.clock);
+            this.clock++;
         }
     }
 
-    private final HashMap<String, Gyro> gyros = new HashMap<>();
+    public Controller getOrCreateController(BlockPos from) {
+        Controller controller = controllers.get(from);
 
-    public void setGyro(BlockPos pos, Vector3d torque) {
-        String key = pos.getX() + "_" + pos.getY() + "_" + pos.getZ();
-        this.gyros.put(key, new Gyro(5, torque));
+        if (controller == null) {
+            controller = new Controller(from);
+        }
+
+        return controller;
     }
 
+    @Override
     public void applyForces(PhysShip physShip) {
-        ArrayList<String> removeQueue = new ArrayList<>();
+        for (Controller controller : (Controller[]) controllers.values().toArray()) {
+            controller.run(physShip);
 
-        this.gyros.forEach((key_pos, gyro) -> {
-            if (!physShip.isStatic()) {
-                physShip.applyRotDependentTorque(gyro.torque);
+            if (controller.clock >= 120D) { // 2s in physics ticks (2 * 60)
+                controller.discard();
             }
-
-            gyro.consume();
-
-            if (gyro.isEmpty()) {
-                removeQueue.add(key_pos);
-            }
-        });
-
-        removeQueue.forEach(this.gyros::remove);
+        }
     }
 
     public static GyroActor getOrCreate(ServerShip ship) {
@@ -82,6 +123,7 @@ public class GyroActor implements ShipForcesInducer {
         return control;
     }
 
+    @Nullable
     public static GyroActor getOrCreate(Level level, BlockPos pos) {
         ServerShip ship = (ServerShip)VSGameUtilsKt.getShipManagingPos(level, pos);
         if (ship == null)

@@ -1,9 +1,17 @@
 package net.croc.mw_peripherals.blocks;
 
 import net.croc.mw_peripherals.RegistryBlockEntities;
+import net.croc.mw_peripherals.integration.computercraft.peripherals.RadarPeripheral;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.protocol.game.DebugPackets;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -19,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class RadarBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -40,6 +49,32 @@ public class RadarBlock extends Block implements EntityBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
+                                List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+
+        tooltip.add(Component.literal("Gimballed Radar")
+                .withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA)));
+
+        tooltip.add(Component.literal("Radar Type: MSA")
+                .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+
+        tooltip.add(Component.literal("Scan FOV: "+(double)RadarPeripheral.DISH_FOV+"°")
+                .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+
+        tooltip.add(Component.literal("Scan Range: "+ (int)RadarPeripheral.maxRange+"m")
+                .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+
+        tooltip.add(Component.literal("Gimbal Field: 360.0°x"+(double)RadarBlockEntity.PITCH_LIMIT+"°")
+                .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+
+        tooltip.add(Component.literal("Gimbal Speed: "
+                        +(double)RadarBlockEntity.YAW_SPEED_LIMIT+"°x"
+                        +(double)RadarBlockEntity.PITCH_SPEED_LIMIT+"° per second")
+                .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
     }
 
     @Override

@@ -5,10 +5,34 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "mw_peripherals.refmap.json",
   "mixins": [
+    "tallyho.IRSeekerAccessor",
+    "tallyho.LaserSeekerAccessor",
+    "tallyho.MixinFlareDispenserBlock",
+    "tallyho.MixinGuidanceComponent",
+    "tallyho.MixinMountedMissileEntity",
+    "tallyho.MixinRippleFireBlock",
+    "tallyho.SACLOSAccessor",
+    "tallyho.TargetAccessor",
+
     "CannonMountAccessor",
-    "MixinFlareDispenserBlock",
     "MixinHatchBlock",
-    "MixinHatchBlockEntity"
+    "MixinHatchBlockEntity",
+    "MixinTurtlePlaceCommand",
+    "MixinThrusterBlock",
+    "MixinPhysBearingBlockEntity",
+    "MixinGunItem",
+    "MixinRhaModBlocks",
+
+    "MixinEntityRenderDispatcher",
+    "MixinGameRenderer",
+    "MixinCamera",
+    "MixinLevelRendererVanilla",
+
+    "vista.VistaLevelRendererMixin",
+    "vista.ViewFinderControllerMixin",
+    "vista.ViewFinderAccessMixin",
+    "vista.LevelRendererCameraStateMixin",
+    "vista.LODMixin"
   ],
   "client": [],
   "server": []

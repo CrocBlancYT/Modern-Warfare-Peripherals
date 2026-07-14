@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "rha:block/hardsteellapistex",
+    "up": "rha:block/hardsteellapistex",
+    "north": "rha:block/hardsteellapistex",
+    "east": "rha:block/hardsteellapistex",
+    "south": "rha:block/hardsteellapistex",
+    "west": "rha:block/hardsteellapistex",
+    "particle": "rha:block/hardsteellapistex"
+  },
+  "render_type": "solid"
+}

@@ -1,6 +1,7 @@
 package net.croc.mw_peripherals.integration.tallyho;
 
 import net.croc.mw_peripherals.Main;
+import net.croc.mw_peripherals.mixin.MixinRhaModBlocks;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,6 +25,8 @@ public class CreativeTabIntegration {
             // misc
             event.accept(REMOTE_OPTICS.get());
             event.accept(FLARE_CARTRIDGE.get());
+            event.accept(JOYSTICK.get());
+            event.accept(TV_GUIDANCE_REMOTE.get());
         }
     }
 }
