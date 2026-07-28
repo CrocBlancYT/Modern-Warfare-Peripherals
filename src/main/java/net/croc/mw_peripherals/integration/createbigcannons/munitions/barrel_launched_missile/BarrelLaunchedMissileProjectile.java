@@ -41,12 +41,13 @@ public class BarrelLaunchedMissileProjectile extends AbstractBigCannonProjectile
 
     @Override
     public void tick() {
-        if (this.tooManyCharges && this.level() instanceof ServerLevel slevel) {
-            CBCUtils.playBlastLikeSoundOnServer(slevel,
-                    this.getX(), this.getY(), this.getZ(),
-                    CBCSoundEvents.SHELL_EXPLOSION.getMainEvent(),
-                    SoundSource.BLOCKS, 12.0F, 1.0F, 5.0F);
+        if (this.tooManyCharges) {
+            if (this.level() instanceof ServerLevel slevel) {
+                slevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, this.getRenderedBlockState()), this.getX(), this.getY(), this.getZ(), 40, 0.1f, 0.1f, 0.1f, 0.01d);
+            }
 
+            SoundType soundType = this.getRenderedBlockState().getSoundType();
+            this.playSound(soundType.getBreakSound(), soundType.getVolume() * 0.5f, soundType.getPitch() * 0.75f);
             this.discard();
             return;
         } else if (missileId != null && this.level() instanceof ServerLevel slevel) {

@@ -1,4 +1,4 @@
-package net.croc.mw_peripherals.mixin;
+package net.croc.mw_peripherals.mixin.vista;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;

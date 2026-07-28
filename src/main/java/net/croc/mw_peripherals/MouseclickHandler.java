@@ -1,6 +1,5 @@
 package net.croc.mw_peripherals;
 
-import dan200.computercraft.shared.peripheral.monitor.MonitorBlockEntity;
 import net.croc.mw_peripherals.network.UseItemOnPacket;
 import net.croc.mw_peripherals.utils.VSUtils;
 import net.minecraft.client.Camera;
@@ -35,13 +34,14 @@ public class MouseclickHandler {
     private static final Minecraft MC = Minecraft.getInstance();
 
     @SubscribeEvent
-    public void onMouse(InputEvent.MouseButton.Pre event) {
+    public void onMouse(InputEvent.MouseButton.Post event) {
         if (event.getButton() != GLFW.GLFW_MOUSE_BUTTON_RIGHT && event.getButton() != GLFW.GLFW_MOUSE_BUTTON_LEFT) return;
         if (event.getAction() != GLFW.GLFW_PRESS) return;
         if (!(MC.screen instanceof ChatScreen)) return;
 
-        event.setCanceled(true);
         if (MC.player == null || MC.gameMode == null) return;
+
+        if (event.isCanceled()) return;
 
         InteractionHand hand = MC.player.getUsedItemHand();
         if (!(MC.player.getItemInHand(hand).getItem() instanceof AirItem)) return;

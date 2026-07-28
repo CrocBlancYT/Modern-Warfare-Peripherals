@@ -77,7 +77,7 @@ public class CannonMountPeripheral implements IPeripheral {
     public final void setYaw(double yaw) throws LuaException {
         CannonMountAccessor cannon = getCannonMount();
         if (!isAutocannon(cannon)) throw new LuaException("setYaw only accessible to autocannons");
-        cannon.IsetPitch((float) yaw);
+        cannon.IsetYaw((float) yaw);
         cannon.Itick();
     }
 

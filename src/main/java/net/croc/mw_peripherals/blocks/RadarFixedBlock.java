@@ -41,7 +41,7 @@ public class RadarFixedBlock extends Block {
         tooltip.add(Component.literal("Radar Type: AESA")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
-        tooltip.add(Component.literal("Scan FOV: 45°")
+        tooltip.add(Component.literal("Scan FOV: °81")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
         tooltip.add(Component.literal("Scan Range: 300m")

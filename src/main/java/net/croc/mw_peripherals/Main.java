@@ -45,7 +45,8 @@ public class Main {
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
-    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID).defaultCreativeTab(RegistryCreativeTab.MWP_TAB.getKey());
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID)
+            .defaultCreativeTab(RegistryCreativeTab.MWP_TAB.getKey());
 
     private static final String[] depList = new String[] {
             "create", "createbigcannons", "vs_clockwork"
@@ -76,7 +77,6 @@ public class Main {
         PeripheralProviders.register();
         RegistryBlockStateInfo.INSTANCE.register();
         CreateTypePacketHandler.registerPackets();
-        KeyBinds.register();
         RegistrySounds.register(modEventBus);
     }
 

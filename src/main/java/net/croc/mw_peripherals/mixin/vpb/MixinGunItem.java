@@ -1,4 +1,4 @@
-package net.croc.mw_peripherals.mixin;
+package net.croc.mw_peripherals.mixin.vpb;
 
 import com.vicmatskiv.pointblank.client.GunClientState;
 import com.vicmatskiv.pointblank.item.GunItem;
@@ -10,13 +10,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-
 @Mixin(value = GunItem.class, priority = 1100)
 public class MixinGunItem {
     @Inject(method = "getMaxServerShootingDistance", at = @At("RETURN"), remap = false, cancellable = true)
     private void constantMaxServerShootingDistance(ItemStack itemStack, boolean isAiming, ServerLevel level,
                                               CallbackInfoReturnable<Double> cir) {
         cir.setReturnValue(500D);
+
+
     }
 
     @Inject(method = "getMaxClientShootingDistance", at = @At("RETURN"), remap = false, cancellable = true)

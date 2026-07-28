@@ -5,6 +5,26 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "mw_peripherals.refmap.json",
   "mixins": [
+    "CannonMountAccessor",
+    "MixinHatchBlock",
+    "MixinHatchBlockEntity",
+    "MixinTurtlePlaceCommand",
+    "MixinThrusterBlock",
+    "MixinPhysBearingBlockEntity",
+    "MixinRhaModBlocks",
+
+    "vpb.MixinGunItem",
+    "vpb.MixinCustomExplosion",
+    "vpb.MixinHitScan",
+
+    "vista.MixinLevelRendererVanilla",
+    "vista.MixinCamera",
+    "vista.VistaLevelRendererMixin",
+    "vista.ViewFinderControllerMixin",
+    "vista.ViewFinderAccessMixin",
+    "vista.LevelRendererCameraStateMixin",
+    "vista.LODMixin",
+
     "tallyho.IRSeekerAccessor",
     "tallyho.LaserSeekerAccessor",
     "tallyho.MixinFlareDispenserBlock",
@@ -13,26 +33,8 @@
     "tallyho.MixinRippleFireBlock",
     "tallyho.SACLOSAccessor",
     "tallyho.TargetAccessor",
-
-    "CannonMountAccessor",
-    "MixinHatchBlock",
-    "MixinHatchBlockEntity",
-    "MixinTurtlePlaceCommand",
-    "MixinThrusterBlock",
-    "MixinPhysBearingBlockEntity",
-    "MixinGunItem",
-    "MixinRhaModBlocks",
-
-    "MixinEntityRenderDispatcher",
-    "MixinGameRenderer",
-    "MixinCamera",
-    "MixinLevelRendererVanilla",
-
-    "vista.VistaLevelRendererMixin",
-    "vista.ViewFinderControllerMixin",
-    "vista.ViewFinderAccessMixin",
-    "vista.LevelRendererCameraStateMixin",
-    "vista.LODMixin"
+    "tallyho.MixinGameRenderer",
+    "tallyho.MixinEntityRenderDispatcher"
   ],
   "client": [],
   "server": []
