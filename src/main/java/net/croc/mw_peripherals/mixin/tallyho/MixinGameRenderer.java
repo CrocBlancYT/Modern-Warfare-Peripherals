@@ -1,4 +1,4 @@
-package net.croc.mw_peripherals.mixin;
+package net.croc.mw_peripherals.mixin.tallyho;
 
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;

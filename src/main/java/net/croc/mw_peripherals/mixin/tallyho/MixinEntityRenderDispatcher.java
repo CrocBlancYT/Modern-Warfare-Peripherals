@@ -1,4 +1,4 @@
-package net.croc.mw_peripherals.mixin;
+package net.croc.mw_peripherals.mixin.tallyho;
 
 import edn.stratodonut.tallyho.entity.MountedMissileEntity;
 import net.minecraft.client.renderer.culling.Frustum;

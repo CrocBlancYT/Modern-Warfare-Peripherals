@@ -41,8 +41,8 @@ public class RadarPeripheral implements IPeripheral {
         this.receiver = this.blockEntity.getReceiver();
     }
 
-    public static final double DISH_FOV = 22;
-    public static final double maxRange = 600;
+    public static final double DISH_FOV = 45;
+    public static final double maxRange = 750;
 
     @LuaFunction
     public final ArrayList<?> scan() {

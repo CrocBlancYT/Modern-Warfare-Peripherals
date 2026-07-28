@@ -37,7 +37,7 @@ public class TargetSolutions {
 
     private record Cone(Vec3 origin, Vec3 dir, double fovRadians) {
         public boolean isInCone(Target<?> target) {
-            return target.position().subtract(origin).toVector3f().angle(dir.toVector3f()) <= (fovRadians * 0.5f);
+            return target.position().subtract(origin).toVector3f().angle(dir.toVector3f()) <= fovRadians;
         }
     }
 

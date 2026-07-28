@@ -44,10 +44,10 @@ public class RadarPanelBlock extends Block {
         tooltip.add(Component.literal("Radar Type: AESA")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
-        tooltip.add(Component.literal("Scan FOV: 45°")
+        tooltip.add(Component.literal("Scan FOV: 60°")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
-        tooltip.add(Component.literal("Scan Range: 300+m")
+        tooltip.add(Component.literal("Scan Range: 300m + 50m per panel")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
     }
 

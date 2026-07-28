@@ -1,4 +1,4 @@
-package net.croc.mw_peripherals.mixin;
+package net.croc.mw_peripherals.mixin.vista;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

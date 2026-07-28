@@ -81,5 +81,5 @@ public class RadarFixedPeripheral implements IPeripheral {
     public final double getMaxRange() { return 300; }
 
     @LuaFunction
-    public final double getDishFOV() { return 45; }
+    public final double getDishFOV() { return 81; }
 }

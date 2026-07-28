@@ -1,10 +1,10 @@
 package net.croc.mw_peripherals.network;
 
 import com.simibubi.create.foundation.networking.SimplePacketBase;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -54,7 +54,7 @@ public class UseItemOnPacket extends SimplePacketBase {
         return this.blockHit;
     }
 
-    public static void useItemOn(LocalPlayer player, InteractionHand hand, BlockHitResult blockHit) {
+    public static void useItemOn(Player player, InteractionHand hand, BlockHitResult blockHit) {
         Level level = player.level();
         level.getBlockState(blockHit.getBlockPos()).use(level, player, hand, blockHit);
         player.getItemInHand(hand).useOn(new UseOnContext(player, hand, blockHit));

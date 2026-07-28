@@ -1,6 +1,5 @@
 package net.croc.mw_peripherals.network;
 
-
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.croc.mw_peripherals.items.MCLOSJoystick;
 import net.minecraft.network.FriendlyByteBuf;

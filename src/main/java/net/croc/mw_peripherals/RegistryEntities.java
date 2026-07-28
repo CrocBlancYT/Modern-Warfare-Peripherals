@@ -6,31 +6,29 @@ import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import edn.stratodonut.tallyho.TallyhoMod;
-import edn.stratodonut.tallyho.render.*;
 import net.croc.mw_peripherals.entity.MountedMissileCameraEntity;
 import net.croc.mw_peripherals.entity.MountedPodEntity;
 import net.croc.mw_peripherals.integration.cbcmodernwarfare.munitions.barrel_launched_missile.MissileMediumcannonProjectile;
 import net.croc.mw_peripherals.integration.cbcmodernwarfare.munitions.barrel_launched_missile.MissileMediumcannonRoundItem;
 import net.croc.mw_peripherals.integration.createbigcannons.munitions.barrel_launched_missile.BarrelLaunchedMissileBlock;
 import net.croc.mw_peripherals.integration.createbigcannons.munitions.barrel_launched_missile.BarrelLaunchedMissileProjectile;
+import net.croc.mw_peripherals.utils.MissileEntityRendererGetter;
 import net.croc.mw_peripherals.utils.SimpleBlockEntry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import org.valkyrienskies.mod.client.EmptyRenderer;
 import rbasamoyai.createbigcannons.CreateBigCannons;
 import rbasamoyai.createbigcannons.index.CBCMunitionPropertiesHandlers;
 import rbasamoyai.createbigcannons.multiloader.EntityTypeConfigurator;
 import rbasamoyai.createbigcannons.munitions.big_cannon.AbstractBigCannonProjectile;
-import rbasamoyai.createbigcannons.munitions.big_cannon.BigCannonProjectileRenderer;
 import rbasamoyai.createbigcannons.munitions.big_cannon.mortar_stone.MortarStonePropertiesHandler;
 import rbasamoyai.createbigcannons.munitions.config.MunitionPropertiesHandler;
 import rbasamoyai.createbigcannons.munitions.config.PropertiesTypeHandler;
 import riftyboi.cbcmodernwarfare.CBCModernWarfare;
 import riftyboi.cbcmodernwarfare.index.CBCModernWarfareMunitionPropertiesHandlers;
-import riftyboi.cbcmodernwarfare.munitions.medium_cannon.AbstractMediumcannonProjectile;
-import riftyboi.cbcmodernwarfare.munitions.medium_cannon.MediumcannonProjectileRenderer;
 import riftyboi.cbcmodernwarfare.munitions.medium_cannon.config.InertMediumcannonProjectilePropertiesHandler;
+import riftyboi.cbcmodernwarfare.munitions.medium_cannon.AbstractMediumcannonProjectile;
+
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -60,7 +58,7 @@ public class RegistryEntities {
         return ((EntityBuilder) CreateBigCannons.REGISTRATE
                 .entity(id, factory, MobCategory.MISC)
                 .properties(cannonProperties())
-                .renderer(() -> BigCannonProjectileRenderer::new)
+                .renderer(() -> rbasamoyai.createbigcannons.munitions.big_cannon.BigCannonProjectileRenderer::new)
                 .tag()
                 .onRegister((type) -> MunitionPropertiesHandler.registerProjectileHandler(type, handler)))
                 .register();
@@ -71,7 +69,7 @@ public class RegistryEntities {
         return ((EntityBuilder) CBCModernWarfare.REGISTRATE
                 .entity(id, factory, MobCategory.MISC)
                 .properties(autocannonProperties())
-                .renderer(() -> MediumcannonProjectileRenderer::new)
+                .renderer(() -> riftyboi.cbcmodernwarfare.munitions.medium_cannon.MediumcannonProjectileRenderer::new)
                 .lang(enUSdiffLang)
                 .tag()
                 .onRegister((type) -> MunitionPropertiesHandler.registerProjectileHandler(type, handler)))
@@ -130,20 +128,18 @@ public class RegistryEntities {
     static {
         POD_ENTITY = REGISTRATE
                 .entity("pod", MountedPodEntity::new, MobCategory.MISC)
-                .renderer(() -> (context) -> new MissileEntityRenderer(context))
+                .renderer(() -> MissileEntityRendererGetter::create)
                 .properties(configure(c -> c
                         .trackingRange(32)
-                        //.clientTrackingRange(32)
                         .updateInterval(3)
                         .updateVelocity(false)
                         .fireImmune()
-                        //.noSummon()
                         .size(1.0f, 1.0f))
                 ).register();
 
         MOUNTED_TV_CAMERA = REGISTRATE
                 .entity("tv_mounted_camera", MountedMissileCameraEntity::new, MobCategory.MISC)
-                .renderer(() -> EmptyRenderer::new)
+                .renderer(() -> org.valkyrienskies.mod.client.EmptyRenderer::new)
                 .properties(configure(c -> c
                         .trackingRange(32)
                         .updateInterval(3)

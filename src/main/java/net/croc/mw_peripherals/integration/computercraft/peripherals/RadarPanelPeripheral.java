@@ -114,7 +114,7 @@ public class RadarPanelPeripheral implements IPeripheral {
     public final double getMaxRange() { return 300 + cached_connected_panels * 50; }
 
     @LuaFunction
-    public final double getDishFOV() { return 45; }
+    public final double getDishFOV() { return 60; }
 
     @LuaFunction
     public final double getConnectedPanels() {

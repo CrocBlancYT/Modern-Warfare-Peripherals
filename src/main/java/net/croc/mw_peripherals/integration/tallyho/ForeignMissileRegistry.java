@@ -77,7 +77,8 @@ public class ForeignMissileRegistry {
                     new FragWarhead(8.0F, 0.3F)
             )))
             .withMotor(new RocketMotorNoLift.Factory(0.42F, 20, 0.01f, true, 0f))
-            .withSize(0.2F));
+            .withSize(0.2F)
+            .withLongRange());
 
     public static MissileRegistryEntry AN_M57 = register((new ForeignMissileEntry("m57", new HighExplosiveWarhead(8.0F)))
             .withSize(0.5F));
