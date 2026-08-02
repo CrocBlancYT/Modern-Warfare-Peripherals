@@ -3,9 +3,7 @@ package net.croc.mw_peripherals.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.render.CachedBufferer;
-import net.croc.mw_peripherals.PartialModels;
-import net.croc.mw_peripherals.blocks.aps.APS;
-import net.croc.mw_peripherals.blocks.aps.ZYRotatedAPS;
+import net.croc.mw_peripherals.blocks.APSTwoAxisBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -14,14 +12,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-public class APSZYRotRenderer implements BlockEntityRenderer<ZYRotatedAPS> {
+public class APSZYRotRenderer implements BlockEntityRenderer<APSTwoAxisBlockEntity> {
     public APSZYRotRenderer(BlockEntityRendererProvider.Context context) {}
 
-    public boolean shouldRender(ZYRotatedAPS aps, Vec3 cameraPos) {
+    public boolean shouldRender(APSTwoAxisBlockEntity aps, Vec3 cameraPos) {
         return true;
     }
 
-    public void render(ZYRotatedAPS aps, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void render(APSTwoAxisBlockEntity aps, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BlockState blockState = aps.getBlockState();
 
         float yaw = aps.getYRot();

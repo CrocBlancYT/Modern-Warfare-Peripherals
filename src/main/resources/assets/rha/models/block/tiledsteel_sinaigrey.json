@@ -4,9 +4,9 @@
     "down": "rha:block/tiledsteelsinaigrey",
     "up": "rha:block/tiledsteelsinaigrey",
     "north": "rha:block/tiledsteelsinaigrey",
-    "east": "rha:block/tiledsteelsinaigrey",
+    "east": "rha:block/slashedsteelsinaigreytex",
     "south": "rha:block/tiledsteelsinaigrey",
-    "west": "rha:block/tiledsteelsinaigrey",
+    "west": "rha:block/slashedsteelsinaigreytex",
     "particle": "rha:block/tiledsteelsinaigrey"
   },
   "render_type": "solid"

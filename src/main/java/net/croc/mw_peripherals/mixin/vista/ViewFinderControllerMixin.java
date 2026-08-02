@@ -22,7 +22,7 @@ import org.valkyrienskies.mod.common.VSGameUtilsKt;
 /* EXTRACTED FROM VS2 */
 @Mixin(ViewFinderController.class)
 public class ViewFinderControllerMixin {
-    @Shadow
+    @Shadow(remap = false)
     protected static ViewFinderAccess access;
 
     @WrapOperation(

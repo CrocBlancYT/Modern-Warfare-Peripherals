@@ -1,14 +1,9 @@
 package net.croc.mw_peripherals;
 
-import com.simibubi.create.AllTags;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
-import com.simibubi.create.foundation.data.TagGen;
 import edn.stratodonut.tallyho.missile.MissileRegistry;
 import net.croc.mw_peripherals.blocks.*;
-import net.croc.mw_peripherals.blocks.aps.APSBlock;
-import net.croc.mw_peripherals.blocks.aps.APSEntry;
-import net.croc.mw_peripherals.blocks.kinetic.CBCBearingBlock;
-import net.croc.mw_peripherals.integration.cbcmodernwarfare.munitions.barrel_launched_missile.MissileMediumcannonRoundItem;
+import net.croc.mw_peripherals.blocks.APSBlock;
+import net.croc.mw_peripherals.content.aps.APSBlockEntry;
 import net.croc.mw_peripherals.integration.createbigcannons.munitions.barrel_launched_missile.BarrelLaunchedMissileBlock;
 import net.croc.mw_peripherals.integration.createbigcannons.munitions.barrel_launched_missile.BarrelLaunchedMissileItem;
 import net.croc.mw_peripherals.integration.tallyho.ForeignMissileRegistry;
@@ -18,8 +13,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import com.tterrag.registrate.util.entry.BlockEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,14 +119,14 @@ public class RegistryBlocks {
                     .register();*/
 
     static {
-        new APSEntry("aps",
+        new APSBlockEntry("aps",
                 2, 32, 15, 360,
                 PartialModels.APS_2_BASE, PartialModels.APS_2_CHARGES)
                 .withYRotation(-360, 360, PartialModels.APS_2_CRADLE)
                 .withZYRotation(-12, 26, PartialModels.APS_2_TUBES)
                 .register();
 
-        new APSEntry("trophy",
+        new APSBlockEntry("trophy",
                 2, 48, 30, 10,
                 PartialModels.APS_TROPHY_BASE, PartialModels.APS_TROPHY_CHARGE)
                 .withYRotation(-60, 60, PartialModels.APS_TROPHY_CRADLE)

@@ -185,7 +185,7 @@ dependencies {
 
     implementation fg.deobf("blank:createbigcannons-5.8.2tt3-dev+mc.1.20.1-forge:5.8.2")
     implementation fg.deobf("blank:createdieselgenerators-1.20.1-1.2i:1.2i")
-    implementation fg.deobf("blank:rha-1.2.1-1.20.1:1.2.1")
+    implementation fg.deobf("blank:rha-1.3.0-1.20.1:1.3.0")
     implementation fg.deobf("blank:tallyho-3.5.6s:3.5.6s")
     implementation fg.deobf("blank:create-1.20.1-0.5.1.j:0.5.1.j")
     implementation fg.deobf("blank:cbcmodernwarfare-0.0.6c+mc.1.20.1-forge:0.0.6c")

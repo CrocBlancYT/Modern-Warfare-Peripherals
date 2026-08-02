@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "rha:block/layeredsteel_lapis"
+    },
+    "facing=east": {
+      "model": "rha:block/layeredsteel_lapis",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "rha:block/layeredsteel_lapis",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "rha:block/layeredsteel_lapis",
+      "y": 270
     }
   }
 }

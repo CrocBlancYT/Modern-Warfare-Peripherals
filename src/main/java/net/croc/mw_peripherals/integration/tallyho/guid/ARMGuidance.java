@@ -76,7 +76,7 @@ public class ARMGuidance extends GuidanceComponent {
         if (this.target == null || missile.tickCount % 10 == 0) {
             Optional<Target<?>> target = RadTracker
                     .ARM(this.receiver, missile,
-                            (float) Math.toRadians(this.properties.seeker_fov),
+                            RadTracker.Angle.degrees(this.properties.seeker_fov),
                             this.properties.seeker_range)
                     .tryLockAny();
 

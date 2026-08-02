@@ -51,7 +51,7 @@ public class RWRPeripheral implements IPeripheral {
 
         Vec3 from = receiver.origin().position();
 
-        RadTracker.passive(receiver, this.pos, new Vec3(0,1,0).scale(maxRange), (float) Math.toRadians(360)).resolve().forEach((target) -> {
+        RadTracker.passive(receiver, this.pos, new Vec3(0,1,0).scale(maxRange), RadTracker.Angle.max()).resolve().forEach((target) -> {
             HashMap<String, Object> luaResult = new HashMap<>();
 
             Vec3 to = target.position();

@@ -2,6 +2,7 @@ package net.croc.mw_peripherals.mixin.tallyho;
 
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import edn.stratodonut.tallyho.entity.MountedMissileEntity;
+import net.croc.mw_peripherals.utils.VSUtils;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,12 +21,14 @@ public abstract class MixinMountedMissileEntity {
     @Invoker(value = "detonate", remap = false)
     public abstract void Detonate(Vec3 hit);
 
-    public static double scalar(Vec3 a, Vec3 b) {
+    @Unique
+    private static double scalar(Vec3 a, Vec3 b) {
         double dot = a.dot(b);
         double len = b.length();
         return len == 0 ? 0 : dot / len;
     }
 
+    @Unique
     private static boolean isIncoming(Vec3 to, Entity projectile) {
         Vec3 from = projectile.getEyePosition();
         Vec3 dir = to.subtract(from);
@@ -34,15 +37,23 @@ public abstract class MixinMountedMissileEntity {
         return scalar(vel, dir) > 0;
     }
 
+    @Unique
     private boolean collide(MountedMissileEntity missile) {
         Vec3 from = missile.position();
         Vec3 to = from.add(missile.getDeltaMovement());
 
         for (AbstractContraptionEntity contraption : missile.level().getEntitiesOfClass(
                 AbstractContraptionEntity.class,
-                missile.getBoundingBox().inflate(missile.getDeltaMovement().length()))) {
+                missile.getBoundingBox().inflate(missile.getDeltaMovement().length()+1))) {
 
-            if (isIncoming(contraption.position(), missile) && contraption.getBoundingBox().clip(from, to).isPresent()) {
+            Vec3 pos = contraption.position();
+            Ship s = VSGameUtilsKt.getShipMountedTo(contraption);
+
+            if (s != null) {
+                pos = VSUtils.toWorldPosition(s, pos);
+            }
+
+            if (isIncoming(pos, missile) && contraption.getBoundingBox().clip(from, to).isPresent()) {
                 return true;
             }
         }
@@ -54,20 +65,8 @@ public abstract class MixinMountedMissileEntity {
     private void impactOnContraptions(CallbackInfo ci) {
         MountedMissileEntity missile = (MountedMissileEntity) (Object) this;
 
-        if (!missile.level().isClientSide() && !missile.isPassenger() && missile.getTicksSinceLaunch() > 50 ) {
-
-            boolean noContraption = missile.level().getEntitiesOfClass(
-                    AbstractContraptionEntity.class,
-                    missile.getBoundingBox().inflate(1D)
-            ).isEmpty();
-
-            // TO TEST
-            /*if (collide(missile)) {
-                this.Detonate(missile.getEyePosition().add(missile.getLookAngle()));
-            }*/
-
-
-            if (!noContraption) {
+        if (!missile.level().isClientSide() && !missile.isPassenger() && missile.getTicksSinceLaunch() > 10 ) {
+            if (collide(missile)) {
                 this.Detonate(missile.getEyePosition().add(missile.getLookAngle()));
             }
         }

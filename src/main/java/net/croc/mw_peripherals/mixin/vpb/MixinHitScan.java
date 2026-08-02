@@ -37,7 +37,7 @@ import java.util.function.Predicate;
 
 @Mixin(value = HitScan.class, priority = 1100)
 public class MixinHitScan {
-    private static class LockableEntity extends Entity {
+    /*private static class LockableEntity extends Entity {
         public LockableEntity(Level level, Vec3 pos) {
             super(EntityType.ARMOR_STAND, level);
             this.setPos(pos);
@@ -53,7 +53,7 @@ public class MixinHitScan {
         protected void addAdditionalSaveData(CompoundTag compoundTag) { }
     }
 
-    @Inject(method = "getNearestObjectInCrosshair", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getNearestObjectInCrosshair", at = @At("RETURN"), cancellable = true, remap = false)
     private static void vpbMissileLockOnShips(LivingEntity player,
                                               Vec3 startPos, Vec3 directionVector,
                                               float partialTicks, double maxDistance,
@@ -104,5 +104,5 @@ public class MixinHitScan {
         }
 
         cir.setReturnValue(((closestEntity != null ? new EntityHitResult(closestEntity, closestEntityHitVec) : res)));
-    }
+    }*/
 }

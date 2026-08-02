@@ -1,13 +1,10 @@
 package net.croc.mw_peripherals.blocks;
 
 import net.croc.mw_peripherals.RegistryBlockEntities;
-import net.croc.mw_peripherals.integration.computercraft.peripherals.RadarPeripheral;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.protocol.game.DebugPackets;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -24,10 +21,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static net.croc.mw_peripherals.integration.computercraft.peripherals.RadarPeripheral.DISH_FOV;
+import static net.croc.mw_peripherals.integration.computercraft.peripherals.RadarPeripheral.MAX_RANGE;
 
 public class RadarBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -62,10 +61,10 @@ public class RadarBlock extends Block implements EntityBlock {
         tooltip.add(Component.literal("Radar Type: MSA")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
-        tooltip.add(Component.literal("Scan FOV: "+(double)RadarPeripheral.DISH_FOV+"°")
+        tooltip.add(Component.literal("Scan FOV: "+45+"°")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
-        tooltip.add(Component.literal("Scan Range: "+ (int)RadarPeripheral.maxRange+"m")
+        tooltip.add(Component.literal("Scan Range: "+750+"m")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
         tooltip.add(Component.literal("Gimbal Field: 360.0°x"+(double)RadarBlockEntity.PITCH_LIMIT+"°")

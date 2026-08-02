@@ -6,11 +6,7 @@ import dan200.computercraft.api.peripheral.IPeripheralProvider;
 import javax.annotation.Nonnull;
 
 import edn.stratodonut.tallyho.block.RippleFireBlock;
-import edn.stratodonut.tallyho.camera.entity.RemoteStationEntity;
 import net.croc.mw_peripherals.blocks.*;
-import net.croc.mw_peripherals.blocks.aps.APS;
-import net.croc.mw_peripherals.blocks.aps.YRotatedAPS;
-import net.croc.mw_peripherals.blocks.aps.ZYRotatedAPS;
 import net.croc.mw_peripherals.integration.computercraft.peripherals.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,7 +16,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -28,14 +23,14 @@ import rbasamoyai.createbigcannons.cannon_control.cannon_mount.CannonMountBlockE
 import rbasamoyai.createbigcannons.cannon_control.fixed_cannon_mount.FixedCannonMountBlockEntity;
 import riftyboi.cbcmodernwarfare.cannon_control.compact_mount.CompactCannonMountBlockEntity;
 
-import java.util.List;
-
 import static net.croc.mw_peripherals.Main.MOD_ID;
 
 public class PeripheralProviders {
+    public static final PeripheralProvider PROVIDER = new PeripheralProvider();
+
     public static void register() {
         if (!ModList.get().isLoaded("computercraft")) return;
-        ForgeComputerCraftAPI.registerPeripheralProvider(new PeripheralProvider());
+        ForgeComputerCraftAPI.registerPeripheralProvider(PROVIDER);
     }
 
     public static class PeripheralProvider implements IPeripheralProvider {
@@ -84,11 +79,11 @@ public class PeripheralProviders {
                 return LazyOptional.of(() -> new GyroscopePeripheral(level, blockPos, be));
 
 
-            if (be instanceof ZYRotatedAPS)
+            if (be instanceof APSTwoAxisBlockEntity)
                 return LazyOptional.of(() -> new APSZYRotPeripheral(level, blockPos));
-            if (be instanceof YRotatedAPS)
+            if (be instanceof APSOneAxisBlockEntity)
                 return LazyOptional.of(() -> new APSYRotPeripheral(level, blockPos));
-            if (be instanceof APS)
+            if (be instanceof APSFixedBlockEntity)
                 return LazyOptional.of(() -> new APSFixedPeripheral(level, blockPos));
 
             if (be instanceof LecternBlockEntity lectern) {

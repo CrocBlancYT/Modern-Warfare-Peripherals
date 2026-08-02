@@ -1,6 +1,9 @@
 package net.croc.mw_peripherals.mixin;
 
 import net.mcreator.rha.block.Hardsteel4boBlock;
+import net.mcreator.rha.block.Layeredsteel4boBlock;
+import net.mcreator.rha.block.Rivetedsteel4boBlock;
+import net.mcreator.rha.block.Tiledsteel4boBlock;
 import net.mcreator.rha.init.RhaModBlocks;
 import net.mcreator.rha.init.RhaModItems;
 import net.minecraft.world.item.BlockItem;
@@ -23,11 +26,23 @@ public class MixinRhaModBlocks {
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void register(CallbackInfo ci) {
-
         for (String steel : steels) {
             for (String color : colors) {
+
                 String id = steel+"steel"+color;
-                RegistryObject<Block> block = RhaModBlocks.REGISTRY.register(id, Hardsteel4boBlock::new);
+                RegistryObject<Block> block;
+
+                switch (steel) {
+                    case "layered":
+                        block = RhaModBlocks.REGISTRY.register(id, Layeredsteel4boBlock::new);
+                        break;
+                    case "tiled":
+                        block = RhaModBlocks.REGISTRY.register(id, Tiledsteel4boBlock::new);
+                        break;
+                    default:
+                        block = RhaModBlocks.REGISTRY.register(id, Hardsteel4boBlock::new);
+                }
+
                 RegistryObject<Item> item = itemForBlock(block);
                 blocks.put(id, block);
                 items.put(id, item);

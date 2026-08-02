@@ -4,9 +4,9 @@
     "down": "rha:block/layeredsteelgurkhatex",
     "up": "rha:block/layeredsteelgurkhatex",
     "north": "rha:block/layeredsteelgurkhatex",
-    "east": "rha:block/layeredsteelgurkhatex",
+    "east": "rha:block/slashedsteelgurkhatex",
     "south": "rha:block/layeredsteelgurkhatex",
-    "west": "rha:block/layeredsteelgurkhatex",
+    "west": "rha:block/slashedsteelgurkhatex",
     "particle": "rha:block/layeredsteelgurkhatex"
   },
   "render_type": "solid"

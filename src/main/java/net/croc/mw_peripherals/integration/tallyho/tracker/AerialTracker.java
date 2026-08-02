@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import static edn.stratodonut.tallyho.missile.GuidanceComponent.tryLock;
@@ -79,5 +80,9 @@ public class AerialTracker {
         }, (s) -> {
             return isAirborne(s) && isAligned(missile, s, rear_angle);
         } );
+    }
+
+    public static List<Target<?>> onlyAerial(List<Target<?>> targets) {
+        return targets.stream().filter(AerialTracker::isAirborne).toList();
     }
 }

@@ -21,13 +21,15 @@ public class BlockTarget {
 
     public static class BlockEntityTarget extends Target<BlockEntity> {
         WeakReference<BlockEntity> be;
+        BlockPos pos;
 
-        public BlockEntityTarget(BlockEntity be) {
+        public BlockEntityTarget(BlockPos pos, @Nullable BlockEntity be) {
             this.be = new WeakReference<>(be);
+            this.pos = pos;
         }
 
         public Vec3 position() {
-            return !this.isAlive() ? Vec3.ZERO : this.be.get().getBlockPos().getCenter();
+            return !this.isAlive() ? Vec3.ZERO : this.pos.getCenter();
         }
 
         public Vec3 velocity() {
@@ -35,7 +37,12 @@ public class BlockTarget {
         }
 
         public AABB boundingBox() {
-            return !this.isAlive() ? DEFAULT_AABB : this.be.get().getRenderBoundingBox();
+            if (!this.isAlive()) return DEFAULT_AABB;
+
+            BlockEntity be = this.be.get();
+            if (be == null) return DEFAULT_AABB;
+
+            return be.getRenderBoundingBox();
         }
 
         @Nullable
@@ -47,8 +54,7 @@ public class BlockTarget {
             return this.be.get() != null;
         }
     }
-
-    @Nullable
+    
     public static Target<?> getTarget(Level level, BlockPos pos) {
         Ship s = VSGameUtilsKt.getShipManagingPos(level, pos);
         if (s != null) {
@@ -56,10 +62,6 @@ public class BlockTarget {
         }
 
         BlockEntity be = level.getBlockEntity(pos);
-        if (be != null) {
-            return new BlockEntityTarget(be);
-        }
-
-        return null;
+        return new BlockEntityTarget(pos, be);
     }
 }

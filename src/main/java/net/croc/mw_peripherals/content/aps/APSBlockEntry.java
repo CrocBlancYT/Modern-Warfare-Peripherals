@@ -1,7 +1,11 @@
-package net.croc.mw_peripherals.blocks.aps;
+package net.croc.mw_peripherals.content.aps;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import net.croc.mw_peripherals.RegistryBlocks;
+import net.croc.mw_peripherals.blocks.APSBlock;
+import net.croc.mw_peripherals.blocks.APSFixedBlockEntity;
+import net.croc.mw_peripherals.blocks.APSOneAxisBlockEntity;
+import net.croc.mw_peripherals.blocks.APSTwoAxisBlockEntity;
 import net.croc.mw_peripherals.utils.SimpleBlockEntry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
@@ -14,8 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class APSEntry {
-    public static final HashMap<String, APSEntry> entries = new HashMap<>();
+public class APSBlockEntry {
+    public static final HashMap<String, APSBlockEntry> entries = new HashMap<>();
 
     public final String id;
 
@@ -53,7 +57,7 @@ public class APSEntry {
     public PartialModel MODEL_CRADLE;
     public PartialModel MODEL_TUBES;
 
-    public APSEntry(String id, int max_charges, int max_range, int cooldown_duration, int fov, PartialModel MODEL_BASE, PartialModel MODEL_CHARGES) {
+    public APSBlockEntry(String id, int max_charges, int max_range, int cooldown_duration, int fov, PartialModel MODEL_BASE, PartialModel MODEL_CHARGES) {
         this.id = id;
 
         this.type = NoRot;
@@ -67,7 +71,7 @@ public class APSEntry {
         this.MODEL_CHARGES = MODEL_CHARGES;
     }
 
-    public APSEntry withYRotation(float min_yRot, float max_yRot, PartialModel MODEL_CRADLE) {
+    public APSBlockEntry withYRotation(float min_yRot, float max_yRot, PartialModel MODEL_CRADLE) {
         this.type = YRot;
         this.min_yRot = min_yRot;
         this.max_yRot = max_yRot;
@@ -76,7 +80,7 @@ public class APSEntry {
         return this;
     }
 
-    public APSEntry withZYRotation(float min_zRot, float max_zRot, PartialModel MODEL_TUBES) {
+    public APSBlockEntry withZYRotation(float min_zRot, float max_zRot, PartialModel MODEL_TUBES) {
         this.type = ZYRot;
         this.min_zRot = min_zRot;
         this.max_zRot = max_zRot;
@@ -85,7 +89,7 @@ public class APSEntry {
         return this;
     }
 
-    public APSEntry register() {
+    public APSBlockEntry register() {
         entries.put(this.id, this);
 
         SimpleBlockEntry<APSBlock> APS_BLOCK = new SimpleBlockEntry<APSBlock>(this.id)
@@ -104,7 +108,7 @@ public class APSEntry {
     public static List<Block> getNoRotAPSBlocks() {
         ArrayList<Block> noRotAPS = new ArrayList<>();
 
-        entries.forEach((String id, APSEntry entry) -> {
+        entries.forEach((String id, APSBlockEntry entry) -> {
             if (entry.isNoRot()) {
                 noRotAPS.add(RegistryBlocks.APS_BLOCKS.get(id).getBlock().get());
             }
@@ -116,7 +120,7 @@ public class APSEntry {
     public static List<Block> getYRotAPSBlocks() {
         ArrayList<Block> YRotAPS = new ArrayList<>();
 
-        entries.forEach((String id, APSEntry entry) -> {
+        entries.forEach((String id, APSBlockEntry entry) -> {
             if (entry.isYRot()) {
                 YRotAPS.add(RegistryBlocks.APS_BLOCKS.get(id).getBlock().get());
             }
@@ -127,7 +131,7 @@ public class APSEntry {
     public static List<Block> getZYRotAPSBlocks() {
         ArrayList<Block> ZYRotAPS = new ArrayList<>();
 
-        entries.forEach((String id, APSEntry entry) -> {
+        entries.forEach((String id, APSBlockEntry entry) -> {
             if (entry.isZYRot()) {
                 ZYRotAPS.add(RegistryBlocks.APS_BLOCKS.get(id).getBlock().get());
             }
@@ -139,11 +143,11 @@ public class APSEntry {
     public BlockEntity getBlockEntity(BlockPos pos, BlockState state) {
         switch (type) {
             case NoRot:
-                return new APS(pos, state);
+                return new APSFixedBlockEntity(pos, state);
             case YRot:
-                return new YRotatedAPS(pos, state);
+                return new APSOneAxisBlockEntity(pos, state);
             case ZYRot:
-                return new ZYRotatedAPS(pos, state);
+                return new APSTwoAxisBlockEntity(pos, state);
         }
 
         return null;

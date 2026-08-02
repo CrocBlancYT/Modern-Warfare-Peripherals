@@ -1,6 +1,7 @@
-package net.croc.mw_peripherals.blocks.aps;
+package net.croc.mw_peripherals.blocks;
 
 import net.croc.mw_peripherals.RegistryBlockEntities;
+import net.croc.mw_peripherals.content.aps.APSBlockEntry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -13,34 +14,34 @@ import org.joml.Vector3d;
 import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
-public class ZYRotatedAPS extends YRotatedAPS {
+public class APSTwoAxisBlockEntity extends APSOneAxisBlockEntity {
     private float zRot = 0;
     private float min_zRot = 0;
     private float max_zRot = 0;
 
-    public APSEntry entry;
+    public APSBlockEntry entry;
 
-    private void loadEntry(APSEntry entry) {
+    private void loadEntry(APSBlockEntry entry) {
         this.entry = entry;
 
         this.min_zRot = entry.min_zRot;
         this.max_zRot = entry.max_zRot;
     }
 
-    public ZYRotatedAPS(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public APSTwoAxisBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
 
         if (state.getBlock() instanceof APSBlock apsBlock) {
-            APSEntry entry = apsBlock.getAPSEntry();
+            APSBlockEntry entry = apsBlock.getAPSEntry();
             loadEntry(entry);
         }
     }
 
-    public ZYRotatedAPS(BlockPos pos, BlockState state) {
+    public APSTwoAxisBlockEntity(BlockPos pos, BlockState state) {
         super(RegistryBlockEntities.ZY_APS_BLOCK_ENTITY.get(), pos, state);
 
         if (state.getBlock() instanceof APSBlock apsBlock) {
-            APSEntry entry = apsBlock.getAPSEntry();
+            APSBlockEntry entry = apsBlock.getAPSEntry();
             loadEntry(entry);
         }
     }

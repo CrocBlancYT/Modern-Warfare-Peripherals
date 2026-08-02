@@ -3,21 +3,27 @@ package net.croc.mw_peripherals.integration.createbigcannons.munitions.barrel_la
 import javax.annotation.Nonnull;
 
 import edn.stratodonut.tallyho.entity.MountedMissileEntity;
+import edn.stratodonut.tallyho.missile.GuidanceComponent;
 import edn.stratodonut.tallyho.missile.MissileRegistry;
+import edn.stratodonut.tallyho.network.CreateTypePacketHandler;
+import edn.stratodonut.tallyho.network.MissileVelocityPacket;
 import net.croc.mw_peripherals.Main;
 import net.croc.mw_peripherals.RegistryBlocks;
 import net.croc.mw_peripherals.RegistryEntities;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.PacketDistributor;
 import rbasamoyai.createbigcannons.index.CBCBlocks;
 import rbasamoyai.createbigcannons.index.CBCEntityTypes;
 import rbasamoyai.createbigcannons.index.CBCMunitionPropertiesHandlers;
@@ -54,15 +60,19 @@ public class BarrelLaunchedMissileProjectile extends AbstractBigCannonProjectile
             MissileRegistry.MissileRegistryEntry entry = MissileRegistry.getEntry(this.missileId);
             if (entry == null) return;
 
+            Vec3 delta = this.getDeltaMovement();
             Vec3 spawnPos = this.position().add(this.getLookAngle().scale(2f));
+            float base_yaw = Mth.wrapDegrees((float)(Mth.atan2(delta.z, delta.x) * (double)(180F / (float)Math.PI)) - 90.0F);
 
-            MountedMissileEntity missile = entry.spawn(slevel, spawnPos, this.getYRot());
+            MountedMissileEntity missile = entry.spawn(slevel, spawnPos, base_yaw);
 
-            missile.setDeltaMovement(this.getDeltaMovement());
-            missile.setYRot(this.getYRot());
-            missile.setXRot(this.getXRot());
-            missile.tick();
+            missile.setDeltaMovement(delta);
+            missile.lookAt(EntityAnchorArgument.Anchor.EYES, missile.getEyePosition().add(delta));
             missile.launch();
+            GuidanceComponent guid = missile.getGuidance();
+            if (guid != null) guid.activateSeeker();
+            CreateTypePacketHandler.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> missile), new MissileVelocityPacket(missile.getId(), delta));
+            missile.tick();
 
             this.discard();
             return;

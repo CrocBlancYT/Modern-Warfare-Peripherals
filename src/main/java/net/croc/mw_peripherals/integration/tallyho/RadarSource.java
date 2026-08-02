@@ -49,11 +49,11 @@ public class RadarSource {
         return source.isAlive(level);
     }
 
-    public record Transmitter(Level level, Target<?> origin, float range) {
+    public record Transmitter(Level level, Target<?> origin, double range) {
         public boolean canIlluminate(Target<?> target) { return this.origin.position().subtract(target.position()).lengthSqr() <= range*range; }
     }
 
-    public record Receiver(Level level, Target<?> origin, float range) {
+    public record Receiver(Level level, Target<?> origin, double range) {
         public boolean canReceive(Target<?> target) { return this.origin.position().subtract(target.position()).lengthSqr() <= range*range; }
     }
 }

@@ -10,8 +10,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import edn.stratodonut.tallyho.entity.MountedMissileEntity;
-import net.croc.mw_peripherals.blocks.aps.APSIntercept;
-import net.croc.mw_peripherals.blocks.aps.YRotatedAPS;
+import net.croc.mw_peripherals.blocks.APSOneAxisBlockEntity;
+import net.croc.mw_peripherals.content.aps.APSIntercept;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -22,10 +22,10 @@ public class APSYRotPeripheral implements IPeripheral {
 
     private final BlockPos pos;
 
-    private final YRotatedAPS aps;
+    private final APSOneAxisBlockEntity aps;
 
     public APSYRotPeripheral(Level level, BlockPos blockPos) {
-        this.aps = (YRotatedAPS) level.getBlockEntity(blockPos);
+        this.aps = (APSOneAxisBlockEntity) level.getBlockEntity(blockPos);
         this.level = level;
         this.pos = blockPos;
     }
@@ -36,7 +36,7 @@ public class APSYRotPeripheral implements IPeripheral {
     }
 
     public boolean equals(@Nullable IPeripheral iPeripheral) {
-        return (this.level != null && this.level.getBlockEntity(this.pos) instanceof YRotatedAPS);
+        return (this.level != null && this.level.getBlockEntity(this.pos) instanceof APSOneAxisBlockEntity);
     }
 
     @LuaFunction

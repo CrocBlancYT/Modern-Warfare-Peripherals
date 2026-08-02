@@ -1,6 +1,5 @@
-package net.croc.mw_peripherals.blocks.aps;
+package net.croc.mw_peripherals.content.aps;
 
-import net.croc.mw_peripherals.RegistryConfigs;
 import net.croc.mw_peripherals.RegistryTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -13,13 +12,11 @@ import java.util.List;
 import org.joml.Vector3d;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
-import rbasamoyai.createbigcannons.munitions.big_cannon.AbstractBigCannonProjectile;
-import rbasamoyai.createbigcannons.munitions.big_cannon.BigCannonProjectileBlockEntity;
 import rbasamoyai.createbigcannons.munitions.big_cannon.FuzedBigCannonProjectile;
 
 public class APSIntercept {
-    private static double getCounterForce() { return RegistryConfigs.Config.APS_COUNTER_FORCE.get(); }
-    private static double getCounterMultiplier() { return RegistryConfigs.Config.APS_COUNTER_MULTIPLIER.get(); }
+    private static double COUNTER_FORCE = 10;
+    private static double COOUNTER_MULTIPLIER = 0.75;
 
     private static String getProjectileType(Entity projectile) {
         if (RegistryTags.isKinetic(projectile)) return "kinetic";
@@ -50,8 +47,8 @@ public class APSIntercept {
     }
 
     private static Vec3 getDeviationImpulse(Vec3 from, Vec3 to, Vec3 vel) {
-        Vec3 slownBy = vel.scale(getCounterMultiplier());
-        Vec3 punch = to.subtract(from).normalize().scale(getCounterForce() / 20);
+        Vec3 slownBy = vel.scale(COOUNTER_MULTIPLIER);
+        Vec3 punch = to.subtract(from).normalize().scale(COUNTER_FORCE / 20);
         return punch.subtract(slownBy);
     }
 

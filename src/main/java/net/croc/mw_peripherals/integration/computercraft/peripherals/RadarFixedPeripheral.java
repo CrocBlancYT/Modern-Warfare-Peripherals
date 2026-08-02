@@ -8,13 +8,17 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import edn.stratodonut.tallyho.missile.Target;
+import net.croc.mw_peripherals.blocks.RadarPanelBlockEntity;
 import net.croc.mw_peripherals.integration.computercraft.LuaUtils;
 import net.croc.mw_peripherals.integration.tallyho.BlockTarget;
 import net.croc.mw_peripherals.integration.tallyho.RadarSource;
 import net.croc.mw_peripherals.integration.tallyho.TargetSolutions;
+import net.croc.mw_peripherals.integration.tallyho.tracker.AerialTracker;
 import net.croc.mw_peripherals.integration.tallyho.tracker.RadTracker;
+import net.croc.mw_peripherals.utils.IRadarBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
@@ -22,8 +26,13 @@ import org.joml.Vector3f;
 
 public class RadarFixedPeripheral implements IPeripheral {
 
+    public static final double DISH_FOV = 81;
+
+    public static final double MAX_RANGE = 300;
+
     private final Level level;
     private final BlockPos pos;
+    private final IRadarBlockEntity be;
 
     private Target<?> target;
     public final RadarSource.Transmitter transmitter;
@@ -40,34 +49,18 @@ public class RadarFixedPeripheral implements IPeripheral {
     public RadarFixedPeripheral(Level level, BlockPos blockPos) {
         this.level = level;
         this.pos = blockPos;
+        this.be = (IRadarBlockEntity) level.getBlockEntity(blockPos);
 
-        this.target = BlockTarget.getTarget(level, blockPos);
+        this.target = new BlockTarget.BlockEntityTarget(blockPos, be);
         this.transmitter = new RadarSource.Transmitter(level, target, (float) getMaxRange());
         this.receiver = new RadarSource.Receiver(level, target, (float) getMaxRange());
-    }
-
-    public Vec3 getRadarDirection() {
-        BlockState state = this.level.getBlockState(this.pos);
-
-        if (state.hasProperty(BlockStateProperties.FACING)) {
-            Vector3f dir = state.getValue(BlockStateProperties.FACING).getOpposite().step();
-            return new Vec3(dir.x, dir.y, dir.z);
-        }
-
-        return Vec3.ZERO;
     }
 
     @LuaFunction
     public final ArrayList<?> scan() {
         ArrayList<HashMap<?, ?>> output = new ArrayList<>();
 
-        TargetSolutions solutions = RadTracker.pulse_doppler(transmitter, receiver,
-                pos, getRadarDirection().scale(getMaxRange()),
-                (float) Math.toRadians(getDishFOV()));
-
-        if (solutions == null) return null;
-
-        for (Target<?> target : solutions.resolve()) {
+        for (Target<?> target : AerialTracker.onlyAerial(this.be.scan().resolve())) {
             HashMap<String, Object> result = new HashMap<>();
             result.put("position", LuaUtils.toLua(target.position()));
             result.put("velocity", LuaUtils.toLua(target.velocity()));
@@ -78,8 +71,8 @@ public class RadarFixedPeripheral implements IPeripheral {
     }
 
     @LuaFunction
-    public final double getMaxRange() { return 300; }
+    public final double getMaxRange() { return this.be.maxRange(); }
 
     @LuaFunction
-    public final double getDishFOV() { return 81; }
+    public final double getDishFOV() { return this.be.scanFoV().degrees(); }
 }

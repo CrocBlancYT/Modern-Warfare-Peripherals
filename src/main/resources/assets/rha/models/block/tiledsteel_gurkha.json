@@ -4,9 +4,9 @@
     "down": "rha:block/tiledsteelgurkha",
     "up": "rha:block/tiledsteelgurkha",
     "north": "rha:block/tiledsteelgurkha",
-    "east": "rha:block/tiledsteelgurkha",
+    "east": "rha:block/slashedsteelgurkhatex",
     "south": "rha:block/tiledsteelgurkha",
-    "west": "rha:block/tiledsteelgurkha",
+    "west": "rha:block/slashedsteelgurkhatex",
     "particle": "rha:block/tiledsteelgurkha"
   },
   "render_type": "solid"

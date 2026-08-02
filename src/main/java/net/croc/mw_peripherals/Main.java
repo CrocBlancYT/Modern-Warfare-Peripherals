@@ -65,7 +65,6 @@ public class Main {
         CREATIVE_TABS.register(modEventBus);
         REGISTRATE.registerEventListeners(modEventBus);
 
-        RegistryConfigs.register(modLoadingContext);
         RegistryItems.register();
         RegistryBlocks.register();
         RegistryBlockEntities.register();

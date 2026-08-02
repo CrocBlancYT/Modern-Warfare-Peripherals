@@ -1,6 +1,7 @@
-package net.croc.mw_peripherals.blocks.aps;
+package net.croc.mw_peripherals.blocks;
 
 import net.croc.mw_peripherals.RegistryBlockEntities;
+import net.croc.mw_peripherals.content.aps.APSBlockEntry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,7 +20,9 @@ import org.joml.Vector3d;
 
 import javax.annotation.Nullable;
 
-public class APS extends BlockEntity {
+import net.croc.mw_peripherals.content.aps.APSIntercept;
+
+public class APSFixedBlockEntity extends BlockEntity {
 
     public int MAX_CHARGES = 0;
     public int MAX_RANGE = 0;
@@ -31,11 +34,11 @@ public class APS extends BlockEntity {
     private final int DEFAULT_COLOR = 0xFFFFFF;
 
     private int color = -1;
-    public final CachedVoxelShape shape = new CachedVoxelShape();
+    public final APSFixedBlockEntity.CachedVoxelShape shape = new APSFixedBlockEntity.CachedVoxelShape();
 
-    public APSEntry entry;
+    public APSBlockEntry entry;
 
-    private void loadEntry(APSEntry entry) {
+    private void loadEntry(APSBlockEntry entry) {
         this.entry = entry;
 
         this.COOLDOWN_DURATION = entry.cooldown_duration;
@@ -44,20 +47,20 @@ public class APS extends BlockEntity {
         this.charges = entry.max_charges;
     }
 
-    public APS(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public APSFixedBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
 
-        if (state.getBlock() instanceof APSBlock apsBlock) {
-            APSEntry entry = apsBlock.getAPSEntry();
+        if (state.getBlock() instanceof net.croc.mw_peripherals.blocks.APSBlock apsBlock) {
+            APSBlockEntry entry = apsBlock.getAPSEntry();
             loadEntry(entry);
         }
     }
 
-    public APS(BlockPos pos, BlockState state) {
+    public APSFixedBlockEntity(BlockPos pos, BlockState state) {
         super(RegistryBlockEntities.FIXED_APS_BLOCK_ENTITY.get(), pos, state);
 
-        if (state.getBlock() instanceof APSBlock apsBlock) {
-            APSEntry entry = apsBlock.getAPSEntry();
+        if (state.getBlock() instanceof net.croc.mw_peripherals.blocks.APSBlock apsBlock) {
+            APSBlockEntry entry = apsBlock.getAPSEntry();
             loadEntry(entry);
         }
     }
@@ -130,7 +133,7 @@ public class APS extends BlockEntity {
             }
 
             if (this.cachedShapeVoxel == null) {
-                return APSBlock.defaultShape;
+                return net.croc.mw_peripherals.blocks.APSBlock.defaultShape;
             }
 
             return this.cachedShapeVoxel;
@@ -180,7 +183,7 @@ public class APS extends BlockEntity {
     public void pointAt(Vector3d to) { }
 
     public Direction getFacing() {
-        return this.getBlockState().getValue(APSBlock.FACING);
+        return this.getBlockState().getValue(net.croc.mw_peripherals.blocks.APSBlock.FACING);
     }
 
     public void setUpdated() {

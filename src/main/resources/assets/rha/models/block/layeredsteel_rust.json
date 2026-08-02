@@ -4,9 +4,9 @@
     "down": "rha:block/layeredsteelrusttex",
     "up": "rha:block/layeredsteelrusttex",
     "north": "rha:block/layeredsteelrusttex",
-    "east": "rha:block/layeredsteelrusttex",
+    "east": "rha:block/slashedsteelrusttex",
     "south": "rha:block/layeredsteelrusttex",
-    "west": "rha:block/layeredsteelrusttex",
+    "west": "rha:block/slashedsteelrusttex",
     "particle": "rha:block/layeredsteelrusttex"
   },
   "render_type": "solid"

@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "rha:block/tiledsteel_gurkha"
+    },
+    "facing=east": {
+      "model": "rha:block/tiledsteel_gurkha",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "rha:block/tiledsteel_gurkha",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "rha:block/tiledsteel_gurkha",
+      "y": 270
     }
   }
 }

@@ -4,9 +4,9 @@
     "down": "rha:block/layeredsteelkelptex",
     "up": "rha:block/layeredsteelkelptex",
     "north": "rha:block/layeredsteelkelptex",
-    "east": "rha:block/layeredsteelkelptex",
+    "east": "rha:block/slashedsteelkelptex",
     "south": "rha:block/layeredsteelkelptex",
-    "west": "rha:block/layeredsteelkelptex",
+    "west": "rha:block/slashedsteelkelptex",
     "particle": "rha:block/layeredsteelkelptex"
   },
   "render_type": "solid"

@@ -4,9 +4,9 @@
     "down": "rha:block/tiledsteelrust",
     "up": "rha:block/tiledsteelrust",
     "north": "rha:block/tiledsteelrust",
-    "east": "rha:block/tiledsteelrust",
+    "east": "rha:block/slashedsteelrusttex",
     "south": "rha:block/tiledsteelrust",
-    "west": "rha:block/tiledsteelrust",
+    "west": "rha:block/slashedsteelrusttex",
     "particle": "rha:block/tiledsteelrust"
   },
   "render_type": "solid"

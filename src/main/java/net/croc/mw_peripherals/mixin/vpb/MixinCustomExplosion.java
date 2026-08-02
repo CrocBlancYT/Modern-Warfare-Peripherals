@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 
 @Mixin(value = CustomExplosion.class)
 public class MixinCustomExplosion {
-    @Inject(method = "explode", at = @At("RETURN"))
+    /*@Inject(method = "explode", at = @At("RETURN"), remap = false)
     private static void explode(Level level, Item item,
                                @Nullable Entity entity, @Nullable DamageSource damageSource,
                                @Nullable ExplosionDamageCalculator calc,
@@ -28,5 +28,5 @@ public class MixinCustomExplosion {
 
         HighExplosiveWarhead warhead = new HighExplosiveWarhead(power);
         warhead.detonate(level, new Vec3(posX, posY, posZ), null);
-    }
+    }*/
 }

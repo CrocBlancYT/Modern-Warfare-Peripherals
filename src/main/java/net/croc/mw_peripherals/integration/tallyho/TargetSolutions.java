@@ -2,8 +2,8 @@ package net.croc.mw_peripherals.integration.tallyho;
 
 import com.ibm.icu.impl.CollectionSet;
 import edn.stratodonut.tallyho.missile.Target;
-import net.croc.mw_peripherals.Main;
 import net.croc.mw_peripherals.integration.tallyho.tracker.AerialTracker;
+import net.croc.mw_peripherals.integration.tallyho.tracker.RadTracker.Angle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -35,9 +35,10 @@ public class TargetSolutions {
     private Target<?> source;
     private final Cone solutionCone;
 
-    private record Cone(Vec3 origin, Vec3 dir, double fovRadians) {
+    private record Cone(Vec3 origin, Vec3 dir, Angle fov) {
         public boolean isInCone(Target<?> target) {
-            return target.position().subtract(origin).toVector3f().angle(dir.toVector3f()) <= fovRadians;
+            if (fov.isMaxAngle()) return true;
+            return target.position().subtract(origin).toVector3f().angle(dir.toVector3f()) <= fov.radians();
         }
     }
 
@@ -47,15 +48,15 @@ public class TargetSolutions {
         this.solutionCone = cone;
 
         if (origin == null) {
-            this.source = new BlockTarget.BlockEntityTarget(null);
+            this.source = new BlockTarget.BlockEntityTarget(BlockPos.containing(cone.origin), null);
         } else {
             this.source = origin;
         }
     }
 
-    public static TargetSolutions getTransmittersInCone(Level level, Vec3 from, Vec3 dir, float fovRadians, @Nullable Target<?> origin) {
+    public static TargetSolutions getTransmittersInCone(Level level, Vec3 from, Vec3 dir, Angle fov, @Nullable Target<?> origin) {
         ArrayList<Target<?>> results = new ArrayList<>();
-        Cone cone = new Cone(from, dir, fovRadians);
+        Cone cone = new Cone(from, dir, fov);
 
         for (RadarSource.Transmitter transmitter : RadarSource.getAllActiveTransmitters()) {
             Target<?> target = transmitter.origin();
@@ -67,9 +68,9 @@ public class TargetSolutions {
         return new TargetSolutions(results, cone, level, origin);
     }
 
-    public static TargetSolutions getShipInCone(Level level, Vec3 from, Vec3 dir, float fovRadians, @Nullable Target<?> origin) {
+    public static TargetSolutions getShipInCone(Level level, Vec3 from, Vec3 dir, Angle fov, @Nullable Target<?> origin) {
         ArrayList<Target<?>> results = new ArrayList<>();
-        Cone cone = new Cone(from, dir, fovRadians);
+        Cone cone = new Cone(from, dir, fov);
         AABB area = new AABB(new BlockPos((int) from.x, (int) from.y, (int) from.z)).inflate(dir.length());
 
         for (Ship ship : VSGameUtilsKt.getShipsIntersecting(level, area)) {
@@ -83,9 +84,9 @@ public class TargetSolutions {
         return new TargetSolutions(results, cone, level, origin);
     }
 
-    public static TargetSolutions getEntitiesInCone(Level level, Vec3 from, Vec3 dir, float fovRadians, @Nullable Target<?> origin, @Nullable Predicate<Entity> isValid) {
+    public static TargetSolutions getEntitiesInCone(Level level, Vec3 from, Vec3 dir, Angle fov, @Nullable Target<?> origin, @Nullable Predicate<Entity> isValid) {
         ArrayList<Target<?>> results = new ArrayList<>();
-        Cone cone = new Cone(from, dir, fovRadians);
+        Cone cone = new Cone(from, dir, fov);
         AABB area = new AABB(from, from.add(dir));
 
         for (Entity e : level.getEntitiesOfClass(Entity.class, area)) {
@@ -101,9 +102,9 @@ public class TargetSolutions {
         return new TargetSolutions(results, cone, level, origin);
     }
 
-    public static TargetSolutions getBlocksInCone(Level level, Vec3 from, Vec3 dir, float fovRadians, @Nullable Target<?> origin) {
+    public static TargetSolutions getBlocksInCone(Level level, Vec3 from, Vec3 dir, Angle fov, @Nullable Target<?> origin) {
         ArrayList<Target<?>> results = new ArrayList<>();
-        Cone cone = new Cone(from, dir, fovRadians);
+        Cone cone = new Cone(from, dir, fov);
 
         for (RadarSource.Transmitter transmitter : RadarSource.getAllActiveTransmitters()) {
             if (cone.isInCone(transmitter.origin())) {
@@ -181,16 +182,16 @@ public class TargetSolutions {
     }
 
     private float altitude(Target<?> target) {
-
         Vec3 p = target.position();
         float groundHeight = this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, new BlockPos((int) p.x, (int) p.y, (int) p.z)).getY();
         return ((float) p.y) - groundHeight;
     }
 
     public TargetSolutions doppler(boolean isAdvanced) {
-        float sourceAltitude = altitude(this.source);
+        /*float sourceAltitude = altitude(this.source);
 
         for (Target<?> target: this.targets) {
+
             float targetAltitude = altitude(target);
 
             boolean groundClutter = targetAltitude < DOPPLER_ALTITUDE && targetAltitude < sourceAltitude;
@@ -213,13 +214,13 @@ public class TargetSolutions {
                     this.accept(new OffsetTarget<>(target, offset));
                 }
             }
-        }
+        }*/
 
         return this.next();
     }
 
     public TargetSolutions pulse() {
-        float sourceAltitude = altitude(this.source);
+        /*float sourceAltitude = altitude(this.source);
 
         for (Target<?> target: this.targets) {
             float targetAltitude = altitude(target);
@@ -228,7 +229,7 @@ public class TargetSolutions {
             if (groundClutter) {
                 this.discard(target);
             }
-        }
+        }*/
 
         return this.next();
     }

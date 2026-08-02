@@ -1,7 +1,7 @@
 package net.croc.mw_peripherals.network;
 
 import com.simibubi.create.foundation.networking.SimplePacketBase;
-import net.croc.mw_peripherals.blocks.aps.APSEffects;
+import net.croc.mw_peripherals.content.aps.APSEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

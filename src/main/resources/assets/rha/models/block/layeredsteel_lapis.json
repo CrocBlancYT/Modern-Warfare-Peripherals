@@ -4,9 +4,9 @@
     "down": "rha:block/layeredsteellapistex",
     "up": "rha:block/layeredsteellapistex",
     "north": "rha:block/layeredsteellapistex",
-    "east": "rha:block/layeredsteellapistex",
+    "east": "rha:block/slashedsteellapistex",
     "south": "rha:block/layeredsteellapistex",
-    "west": "rha:block/layeredsteellapistex",
+    "west": "rha:block/slashedsteellapistex",
     "particle": "rha:block/layeredsteellapistex"
   },
   "render_type": "solid"

@@ -83,7 +83,7 @@ public class ARHSeeker extends GuidanceComponent {
 
             Optional<Target<?>> target = RadTracker
                     .ARH(transmitter, receiver, missile,
-                            (float) Math.toRadians(this.properties.seeker_fov),
+                            RadTracker.Angle.degrees(this.properties.seeker_fov),
                             this.properties.seeker_range)
                     .tryLockAerial();
 

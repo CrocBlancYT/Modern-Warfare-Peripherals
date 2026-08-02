@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "rha:block/tiledsteel_sinaigrey"
+    },
+    "facing=east": {
+      "model": "rha:block/tiledsteel_sinaigrey",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "rha:block/tiledsteel_sinaigrey",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "rha:block/tiledsteel_sinaigrey",
+      "y": 270
     }
   }
 }

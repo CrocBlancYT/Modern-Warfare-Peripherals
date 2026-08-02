@@ -86,7 +86,7 @@ public class SARHSeeker extends GuidanceComponent {
             RadarSource.Receiver receiver = new RadarSource.Receiver(missile.level(), m, this.properties.seeker_range);
 
             Optional<Target<?>> target = RadTracker
-                    .SARH(receiver, missile, (float) Math.toRadians(this.properties.seeker_fov), this.properties.seeker_range)
+                    .SARH(receiver, missile, RadTracker.Angle.degrees(this.properties.seeker_fov), this.properties.seeker_range)
                     .tryLockAerial();
 
             target.ifPresent(value -> this.target = value);

@@ -4,9 +4,9 @@
     "down": "rha:block/tiledsteelkelp",
     "up": "rha:block/tiledsteelkelp",
     "north": "rha:block/tiledsteelkelp",
-    "east": "rha:block/tiledsteelkelp",
+    "east": "rha:block/slashedsteelkelptex",
     "south": "rha:block/tiledsteelkelp",
-    "west": "rha:block/tiledsteelkelp",
+    "west": "rha:block/slashedsteelkelptex",
     "particle": "rha:block/tiledsteelkelp"
   },
   "render_type": "solid"

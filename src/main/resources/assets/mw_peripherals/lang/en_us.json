@@ -8,9 +8,13 @@
   "block.mw_peripherals.jet_engine": "Jet Engine",
   "block.mw_peripherals.lws": "Laser Warning system",
 
-  "block.mw_peripherals.aps": "2-Charge APS 'Sentry'",
-  "block.mw_peripherals.aps6": "6-Charge APS 'Heavy Duty'",
-  "block.mw_peripherals.trophy": "Trophy APS 'Iron Wall'",
+  "block.mw_peripherals.aps": "APS 'Sentry'",
+  "block.mw_peripherals.trophy": "APS 'Trophy'",
+  "block.mw_peripherals.iron_fist": "APS 'Iron Fist LC'",
+  "block.mw_peripherals.leds150": "APS 'LEDS-150'",
+  "block.mw_peripherals.arena_m": "APS 'Arena-M'",
+  "block.mw_peripherals.arena_3": "APS 'Arena-3'",
+  "block.mw_peripherals.drozd": "APS 'Drozd'",
 
   "item.mw_peripherals.aps_charge": "APS Charge",
   "item.mw_peripherals.remote_fuze": "Remote Fuze",

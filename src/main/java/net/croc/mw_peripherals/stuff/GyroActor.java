@@ -1,13 +1,10 @@
 package net.croc.mw_peripherals.stuff;
 
-import net.croc.mw_peripherals.Main;
-import net.croc.mw_peripherals.RegistryConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Math;
 import org.joml.Vector3d;
-import org.joml.Vector3dc;
 import org.valkyrienskies.core.api.ships.PhysShip;
 import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.core.api.ships.ShipForcesInducer;
@@ -15,7 +12,6 @@ import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 

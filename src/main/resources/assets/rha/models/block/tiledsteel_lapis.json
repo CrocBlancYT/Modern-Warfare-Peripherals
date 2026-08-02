@@ -4,9 +4,9 @@
     "down": "rha:block/tiledsteellapis",
     "up": "rha:block/tiledsteellapis",
     "north": "rha:block/tiledsteellapis",
-    "east": "rha:block/tiledsteellapis",
+    "east": "rha:block/slashedsteellapistex",
     "south": "rha:block/tiledsteellapis",
-    "west": "rha:block/tiledsteellapis",
+    "west": "rha:block/slashedsteellapistex",
     "particle": "rha:block/tiledsteellapis"
   },
   "render_type": "solid"

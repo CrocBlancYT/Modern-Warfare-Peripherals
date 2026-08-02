@@ -1,9 +1,10 @@
-package net.croc.mw_peripherals.blocks.aps;
+package net.croc.mw_peripherals.blocks;
 
 
 import com.simibubi.create.AllItems;
 import net.croc.mw_peripherals.RegistryBlockEntities;
 import net.croc.mw_peripherals.RegistryItems;
+import net.croc.mw_peripherals.content.aps.APSBlockEntry;
 import net.croc.mw_peripherals.utils.RHAColors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -40,15 +41,15 @@ import java.util.List;
 public class APSBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    private final APSEntry entry;
+    private final APSBlockEntry entry;
 
-    public APSBlock(BlockBehaviour.Properties properties, APSEntry entry) {
+    public APSBlock(BlockBehaviour.Properties properties, APSBlockEntry entry) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, net.minecraft.core.Direction.NORTH));
         this.entry = entry;
     }
 
-    public APSEntry getAPSEntry() {
+    public APSBlockEntry getAPSEntry() {
         return this.entry;
     }
 
@@ -82,7 +83,7 @@ public class APSBlock extends Block implements EntityBlock {
     @Override
     public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof APS aps) {
+        if (blockEntity instanceof APSFixedBlockEntity aps) {
             VoxelShape shape = aps.shape.get();
             if (shape != null) {
                 return shape;
@@ -132,7 +133,7 @@ public class APSBlock extends Block implements EntityBlock {
 
         BlockEntity be = level.getBlockEntity(pos);
 
-        if (be instanceof APS aps) {
+        if (be instanceof APSFixedBlockEntity aps) {
             ItemStack item = player.getItemInHand(hand);
 
             if (item.getItem() == RegistryItems.APS_CHARGE.get()) {
@@ -168,7 +169,7 @@ public class APSBlock extends Block implements EntityBlock {
 
         if (blockEntityType == RegistryBlockEntities.FIXED_APS_BLOCK_ENTITY.get()) {
             return (tickLevel, tickPos, tickState, tickBlockEntity) -> {
-                if (tickBlockEntity instanceof APS aps) {
+                if (tickBlockEntity instanceof APSFixedBlockEntity aps) {
                     aps.tick(tickLevel, tickPos, tickState);
                 };
             };
@@ -176,7 +177,7 @@ public class APSBlock extends Block implements EntityBlock {
 
         if (blockEntityType == RegistryBlockEntities.Y_APS_BLOCK_ENTITY.get()) {
             return (tickLevel, tickPos, tickState, tickBlockEntity) -> {
-                if (tickBlockEntity instanceof YRotatedAPS aps) {
+                if (tickBlockEntity instanceof APSOneAxisBlockEntity aps) {
                     aps.tick(tickLevel, tickPos, tickState);
                 };
             };
@@ -184,7 +185,7 @@ public class APSBlock extends Block implements EntityBlock {
 
         if (blockEntityType == RegistryBlockEntities.ZY_APS_BLOCK_ENTITY.get()) {
             return (tickLevel, tickPos, tickState, tickBlockEntity) -> {
-                if (tickBlockEntity instanceof ZYRotatedAPS aps) {
+                if (tickBlockEntity instanceof APSTwoAxisBlockEntity aps) {
                     aps.tick(tickLevel, tickPos, tickState);
                 };
             };

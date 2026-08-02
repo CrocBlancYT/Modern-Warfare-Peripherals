@@ -11,8 +11,8 @@ import rbasamoyai.createbigcannons.cannon_control.fixed_cannon_mount.FixedCannon
 import riftyboi.cbcmodernwarfare.cannon_control.compact_mount.CompactCannonMountBlockEntity;
 
 @Pseudo
-@Mixin({CannonMountBlockEntity.class, CompactCannonMountBlockEntity.class})
-public interface CannonMountAccessor extends CannonMountDuck {
+@Mixin({FixedCannonMountBlockEntity.class})
+public interface FixedCannonMountAccessor extends CannonMountDuck {
   @Invoker(value = "assemble", remap = false)
   void Iassemble();
 
@@ -22,22 +22,16 @@ public interface CannonMountAccessor extends CannonMountDuck {
   @Invoker(value = "tick", remap = false)
   void Itick();
 
-  @Invoker(value = "getMaxDepress", remap = false)
-  float IgetMaxDepress();
-  
-  @Invoker(value = "getMaxElevate", remap = false)
-  float IgetMaxElevate();
-
   @Accessor(remap = false)
   float getCannonYaw();
 
   @Accessor(remap = false)
   float getCannonPitch();
 
-  @Invoker(value = "setPitch", remap = false)
+  @Accessor(remap = false)
   void setCannonPitch(float pitch);
 
-  @Invoker(value = "setYaw", remap = false)
+  @Accessor(remap = false)
   void setCannonYaw(float yaw);
 
   @Invoker(value = "getContraption", remap = false)

@@ -1,8 +1,6 @@
 package net.croc.mw_peripherals.blocks;
 
-import net.croc.mw_peripherals.blocks.aps.APS;
-import net.croc.mw_peripherals.integration.computercraft.peripherals.RadarPanelPeripheral;
-import net.croc.mw_peripherals.integration.computercraft.peripherals.RadarPeripheral;
+import net.croc.mw_peripherals.RegistryBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,8 +10,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -25,12 +28,38 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadarPanelBlock extends Block {
+public class RadarPanelBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public RadarPanelBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, net.minecraft.core.Direction.NORTH));
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new RadarPanelBlockEntity(pos, state);
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState state2, boolean bool) {
+        super.onPlace(state, level, pos, state2, bool);
+        if (level.getBlockEntity(pos) instanceof RadarPanelBlockEntity panel) {
+            panel.refreshPanels();
+        }
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state2, boolean bool) {
+        super.onRemove(state, level, pos, state2, bool);
+
+        Direction.stream().forEach(direction -> {
+            BlockPos neighbor = pos.relative(direction);
+
+            if (level.getBlockEntity(neighbor) instanceof RadarPanelBlockEntity panel) {
+                panel.refreshPanels();
+            }
+        });
     }
 
     @Override
@@ -44,10 +73,10 @@ public class RadarPanelBlock extends Block {
         tooltip.add(Component.literal("Radar Type: AESA")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
-        tooltip.add(Component.literal("Scan FOV: 60°")
+        tooltip.add(Component.literal("Scan FOV: "+60+"°")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
-        tooltip.add(Component.literal("Scan Range: 300m + 50m per panel")
+        tooltip.add(Component.literal("Scan Range: "+300+"m + "+50+"m per panel")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
     }
 
@@ -85,5 +114,18 @@ public class RadarPanelBlock extends Block {
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getShape(state, level, pos, context);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        if (blockEntityType != RegistryBlockEntities.RADAR_PANEL_BLOCK_ENTITY.get()) return null;
+        if (level.isClientSide()) return null;
+
+        return (tickLevel, tickPos, tickState, tickBlockEntity) -> {
+            if (tickBlockEntity instanceof RadarPanelBlockEntity radar) {
+                RadarPanelBlockEntity.tick(tickLevel, tickPos, tickState, radar);
+            };
+        };
     }
 }
