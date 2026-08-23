@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import net.croc.mw_peripherals.RegistryBlockEntities;
 import net.croc.mw_peripherals.integration.tallyho.tracker.RadTracker.Angle;
 import net.croc.mw_peripherals.utils.IRadarBlockEntity;
+import net.croc.mw_peripherals.utils.VSShipComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -138,18 +139,22 @@ public class RadarBlockEntity extends IRadarBlockEntity {
                 this.getBlockState(), 2);
     }
 
+    @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putFloat("yaw", this.yaw);
         tag.putFloat("pitch", this.pitch);
     }
 
+    @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         if (tag.contains("yaw"))
             this.yaw = tag.getFloat("yaw");
         if (tag.contains("pitch"))
             this.pitch = tag.getFloat("pitch");
+
+        VSShipComponents.subscribe(this);
     }
 
     @Nullable
@@ -157,18 +162,21 @@ public class RadarBlockEntity extends IRadarBlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
         if (tag != null)
             this.load(tag);
     }
 
+    @Override
     public @NotNull CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
         this.saveAdditional(tag);
         return tag;
     }
 
+    @Override
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
         this.load(tag);

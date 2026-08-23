@@ -9,7 +9,11 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import edn.stratodonut.tallyho.missile.motor.RocketMotor;
+import edn.stratodonut.tallyho.missile.motor.RocketMotorNoLift;
+import net.croc.mw_peripherals.blocks.MAWSBlockEntity;
 import net.croc.mw_peripherals.entity.MountedPodEntity;
+import net.croc.mw_peripherals.integration.computercraft.LuaUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -24,13 +28,16 @@ public class MAWSPeripheral implements IPeripheral {
 
     private final BlockPos pos;
 
-    private static final double MAX_RANGE = 100.0D;
+    private final MAWSBlockEntity maws;
+
+    public static final double MAX_RANGE = 100.0D;
 
     public static final int HOT_LAUNCH_DURATION = 30;
 
     public MAWSPeripheral(Level level, BlockPos blockPos) {
       this.level = level;
       this.pos = blockPos;
+      this.maws = (MAWSBlockEntity) level.getBlockEntity(pos);
     }
 
     @Nonnull
@@ -43,25 +50,20 @@ public class MAWSPeripheral implements IPeripheral {
     }
 
     public static boolean isDetectable(MountedMissileEntity missile) {
-        if (missile.getMotor() instanceof edn.stratodonut.tallyho.missile.motor.RocketMotor && missile.getTicksSinceLaunch() < 30)
+        if (missile.getMotor() instanceof RocketMotor && missile.getTicksSinceLaunch() < HOT_LAUNCH_DURATION)
             return true;
-        if (missile.getMotor() instanceof edn.stratodonut.tallyho.missile.motor.RocketMotorNoLift && missile.getTicksSinceLaunch() < 30)
+        if (missile.getMotor() instanceof RocketMotorNoLift && missile.getTicksSinceLaunch() < HOT_LAUNCH_DURATION)
             return true;
         return false;
     }
+
     @LuaFunction
     public ArrayList<HashMap<?, ?>> detect() {
         ArrayList<HashMap<?, ?>> output = new ArrayList<>();
 
-        Vec3 worldPos = VSGameUtilsKt.toWorldCoordinates(this.level, this.pos.getCenter());
-
-        AABB box = new AABB(worldPos, worldPos).inflate(100D);
-
-        List<Entity> entities = this.level.getEntities(null, box);
-
-        entities.forEach(entity -> {
-            if (entity instanceof MountedMissileEntity missile && missile.isDeployed() && isDetectable(missile)
-                    && !(entity instanceof MountedPodEntity)) {
+        maws.getIncoming().forEach(missile -> {
+            if (missile.isDeployed() && isDetectable(missile)
+                    && !(missile instanceof MountedPodEntity)) {
                 HashMap<Object, Object> lua_missile = new HashMap<>();
 
                 lua_missile.put("x", missile.getX());

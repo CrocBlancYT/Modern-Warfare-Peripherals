@@ -1,0 +1,32 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "mw_peripherals:block/rocket_pod_19",
+		"particle": "mw_peripherals:block/rocket_pod_19"
+	},
+	"elements": [
+		{
+			"name": "holes",
+			"from": [1.93702, 0.32063, -7.55995],
+			"to": [14.15452, 12.53813, 25.86605],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.05, 6.49688, -0.50156]},
+			"faces": {
+				"north": {"uv": [5.5, 10.5, 10.5, 15.5], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [0, 5.25, 0, 9.75], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [0.25, 10.5, 5.25, 15.5], "rotation": 180, "texture": "#0"},
+				"west": {"uv": [0, 9.75, 0, 5.5], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [0, 6, 0, 9.75], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [0, 5.5, 0, 9.75], "rotation": 270, "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		}
+	}
+}

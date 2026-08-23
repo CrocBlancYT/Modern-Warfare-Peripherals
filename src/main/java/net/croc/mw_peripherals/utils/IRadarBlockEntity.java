@@ -12,12 +12,16 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
 import java.util.function.Function;
 
 public abstract class IRadarBlockEntity extends BlockEntity {
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+
     private Target<?> target;
     private RadarSource.Transmitter transmitter;
     private RadarSource.Receiver receiver;
@@ -84,7 +88,11 @@ public abstract class IRadarBlockEntity extends BlockEntity {
     }
 
     public Direction getFacing() {
-        return this.getBlockState().getValue(RadarBlock.FACING);
+        BlockState state = this.getBlockState();
+        if (state.hasProperty(FACING)) {
+            return state.getValue(FACING);
+        }
+        return Direction.UP;
     }
 
     public Vec3 getRadarDirection() {

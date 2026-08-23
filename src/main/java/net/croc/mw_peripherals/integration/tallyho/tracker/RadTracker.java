@@ -104,7 +104,6 @@ public class RadTracker {
                 .doppler(true);
     }
 
-
     public static TargetSolutions ARM(RadarSource.Receiver receiver, MountedMissileEntity missile,
                                       Angle fov, double max_range) {
         return TargetSolutions.getTransmittersInCone(missile.level(), missile.position(),
@@ -115,8 +114,7 @@ public class RadTracker {
     public static TargetSolutions passive(RadarSource.Receiver receiver,
                                         BlockPos from, Vec3 dir, Angle fov) {
         return getMissileTargets(receiver.level(), from.getCenter(), dir, fov, null)
-                .receivedBy(receiver)
-                .pulse();
+                .receivedBy(receiver);
     }
 
 }

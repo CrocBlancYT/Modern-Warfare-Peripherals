@@ -27,7 +27,6 @@ import org.joml.Vector3f;
 public class RadarFixedPeripheral implements IPeripheral {
 
     public static final double DISH_FOV = 81;
-
     public static final double MAX_RANGE = 300;
 
     private final Level level;

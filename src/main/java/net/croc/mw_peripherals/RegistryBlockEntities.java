@@ -1,6 +1,9 @@
 package net.croc.mw_peripherals;
 
 import net.croc.mw_peripherals.blocks.*;
+import net.croc.mw_peripherals.blocks.launchers.RocketPod19BlockEntity;
+import net.croc.mw_peripherals.blocks.launchers.RocketPod4BlockEntity;
+import net.croc.mw_peripherals.blocks.launchers.RocketPod7BlockEntity;
 import net.croc.mw_peripherals.content.aps.APSBlockEntry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,6 +25,14 @@ public class RegistryBlockEntities {
     public static RegistryObject<BlockEntityType<RadarBlockEntity>> RADAR_BLOCK_ENTITY;
     public static RegistryObject<BlockEntityType<RadarPanelBlockEntity>> RADAR_PANEL_BLOCK_ENTITY;
     public static RegistryObject<BlockEntityType<RadarFixedBlockEntity>> RADAR_FIXED_BLOCK_ENTITY;
+
+    public static RegistryObject<BlockEntityType<RocketPod4BlockEntity>> ROCKET_POD_4_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<RocketPod7BlockEntity>> ROCKET_POD_7_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<RocketPod19BlockEntity>> ROCKET_POD_19_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<MAWSBlockEntity>> MAWS_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<RWRBlockEntity>> RWR_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<LWSBlockEntity>> LWS_BLOCK_ENTITY;
+    public static RegistryObject<BlockEntityType<WPMBlockEntity>> WPM_BLOCK_ENTITY;
 
     //public static BlockEntityEntry<CBCBearingBlockEntity> SYNCED_MECHANICAL_BEARING;
 
@@ -69,6 +80,42 @@ public class RegistryBlockEntities {
         FLARE_DISPENSER_BLOCK_ENTITY = BLOCK_ENTITIES.register("flare_dispenser_block_entity",
                 () -> BlockEntityType.Builder.of(FlareDispenserBlockEntity::new,
                                 AllBlocks.FLARE_DISPENSER.get())
+                        .build(null));
+
+        ROCKET_POD_4_BLOCK_ENTITY = BLOCK_ENTITIES.register("rocket_pod_4_block_entity",
+                () -> BlockEntityType.Builder.of(RocketPod4BlockEntity::new,
+                                RegistryBlocks.ROCKET_POD_4.getBlock().get())
+                        .build(null));
+
+        ROCKET_POD_7_BLOCK_ENTITY = BLOCK_ENTITIES.register("rocket_pod_7_block_entity",
+                () -> BlockEntityType.Builder.of(RocketPod7BlockEntity::new,
+                                RegistryBlocks.ROCKET_POD_7.getBlock().get())
+                        .build(null));
+
+        ROCKET_POD_19_BLOCK_ENTITY = BLOCK_ENTITIES.register("rocket_pod_19_block_entity",
+                () -> BlockEntityType.Builder.of(RocketPod19BlockEntity::new,
+                                RegistryBlocks.ROCKET_POD_19.getBlock().get())
+                        .build(null));
+
+        MAWS_BLOCK_ENTITY = BLOCK_ENTITIES.register("maws_block_entity",
+                () -> BlockEntityType.Builder.of(MAWSBlockEntity::new,
+                                RegistryBlocks.MAWS.getBlock().get())
+                        .build(null));
+
+
+        RWR_BLOCK_ENTITY = BLOCK_ENTITIES.register("rwr_block_entity",
+                () -> BlockEntityType.Builder.of(RWRBlockEntity::new,
+                                RegistryBlocks.RWR.getBlock().get())
+                        .build(null));
+
+        LWS_BLOCK_ENTITY = BLOCK_ENTITIES.register("lws_block_entity",
+                () -> BlockEntityType.Builder.of(LWSBlockEntity::new,
+                                RegistryBlocks.LWS.getBlock().get())
+                        .build(null));
+
+        WPM_BLOCK_ENTITY = BLOCK_ENTITIES.register("wpm_block_entity",
+                () -> BlockEntityType.Builder.of(WPMBlockEntity::new,
+                                RegistryBlocks.WPM.getBlock().get())
                         .build(null));
 
         /*SYNCED_MECHANICAL_BEARING = Main.REGISTRATE

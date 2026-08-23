@@ -1,9 +1,9 @@
 package net.croc.mw_peripherals.blocks;
 
 import javax.annotation.Nullable;
+
 import net.croc.mw_peripherals.RegistryBlockEntities;
 import net.croc.mw_peripherals.integration.computercraft.peripherals.RWRPeripheral;
-import net.croc.mw_peripherals.stuff.GyroActor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -19,10 +19,11 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class RWRBlock extends Block {
+public class RWRBlock extends Block implements EntityBlock {
     public RWRBlock(BlockBehaviour.Properties properties) {
         super(properties);
     }
@@ -38,7 +39,26 @@ public class RWRBlock extends Block {
         tooltip.add(Component.literal("Receiver FOV: 360°")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 
-        tooltip.add(Component.literal("Receiver Range: "+ RWRPeripheral.maxRange+"m")
+        tooltip.add(Component.literal("Receiver Range: "+ RWRBlockEntity.maxRange +"m")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+        return new RWRBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        if (blockEntityType != RegistryBlockEntities.RWR_BLOCK_ENTITY.get())
+            return null;
+        if (level.isClientSide())
+            return null;
+        return (tickLevel, tickPos, tickState, tickBlockEntity) -> {
+            if (tickBlockEntity instanceof RWRBlockEntity rwr) {
+                rwr.tick();
+            }
+        };
     }
 }

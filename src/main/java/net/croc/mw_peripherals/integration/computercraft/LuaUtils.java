@@ -1,7 +1,10 @@
 package net.croc.mw_peripherals.integration.computercraft;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaterniond;

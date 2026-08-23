@@ -20,7 +20,9 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.system.MemoryStack;
 
-@EventBusSubscriber(modid = "mw_peripherals", value = {Dist.CLIENT}, bus = Mod.EventBusSubscriber.Bus.MOD)
+import static net.croc.mw_peripherals.Main.MOD_ID;
+
+@EventBusSubscriber(modid = MOD_ID, value = {Dist.CLIENT}, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryIcon {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
@@ -38,9 +40,9 @@ public class RegistryIcon {
         Window window = minecraft.getWindow();
         try {
             List<NativeImage> iconImages = new ArrayList<>();
-            iconImages.add(loadNativeImage(new ResourceLocation("mw_peripherals", "textures/icon/icon_16x16.png")));
-            iconImages.add(loadNativeImage(new ResourceLocation("mw_peripherals", "textures/icon/icon_32x32.png")));
-            iconImages.add(loadNativeImage(new ResourceLocation("mw_peripherals", "textures/icon/icon_64x64.png")));
+            iconImages.add(loadNativeImage(new ResourceLocation(MOD_ID, "textures/icon/icon_16x16.png")));
+            iconImages.add(loadNativeImage(new ResourceLocation(MOD_ID, "textures/icon/icon_32x32.png")));
+            iconImages.add(loadNativeImage(new ResourceLocation(MOD_ID, "textures/icon/icon_64x64.png")));
             List<ByteBuffer> iconBuffers = new ArrayList<>();
             for (NativeImage image : iconImages) {
                 ByteBuffer buffer = ByteBuffer.allocateDirect(image.getWidth() * image.getHeight() * 4);

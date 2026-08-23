@@ -5,6 +5,7 @@ import net.croc.mw_peripherals.stuff.ShipHandle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -29,6 +30,10 @@ import java.util.HashMap;
 
 public class RegistryCommands {
 
+    private static void sortShipsByAltitude(Ship[] ships) {
+
+    }
+
     private static void getConnectedShip(Level level, Ship start, HashMap<Ship, Ship> target) {
         for (Ship ship : VSGameUtilsKt.getShipsIntersecting(level, start.getWorldAABB())) {
             if (!target.containsKey(ship)) {
@@ -48,6 +53,7 @@ public class RegistryCommands {
 
     private static void teleportShips(Player player) {
         if (player == null) return;
+        if (!player.isCreative()) return;
 
         Level level = player.level();
 
@@ -79,7 +85,7 @@ public class RegistryCommands {
                         1.0D
                 );
 
-                teleport_pos = teleport_pos.add(new Vector3d(0, height, 0));
+                teleport_pos = teleport_pos.add(new Vector3d(0, height, 0), new Vector3d());
 
                 ServerShipWorld world = (ServerShipWorld) VSGameUtilsKt.getShipObjectWorld(level);
 
@@ -87,12 +93,14 @@ public class RegistryCommands {
                 VSGameUtilsKt.getVsCore().teleportShip(world, (ServerShip) ship, teleportData);
             }
         }
+
+        player.sendSystemMessage(Component.literal("Split "+ships.keySet().toArray().length+" ships"));
     }
 
     public static void register(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
-        dispatcher.register(Commands.literal("ships")
+        dispatcher.register(Commands.literal("vs")
                 .then(Commands.literal("split")
                         .executes(context -> {
                             Player player = context.getSource().getPlayer();

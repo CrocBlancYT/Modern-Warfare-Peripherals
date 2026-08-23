@@ -28,6 +28,7 @@ public class RegistryItems {
     public static RegistryObject<Item> FLARE_CARTRIDGE;
     public static RegistryObject<Item> JOYSTICK;
     public static RegistryObject<Item> TV_GUIDANCE_REMOTE;
+    public static RegistryObject<Item> FIGHTERHELM_HELMET;
 
     public static void register() {
         APS_CHARGE = ITEMS.register("aps_charge", () -> new Item((new Item.Properties())
@@ -58,6 +59,7 @@ public class RegistryItems {
                 .stacksTo(1)
                 .rarity(Rarity.COMMON)));
 
+
         /*LASER_SENSOR = ITEMS.register("laser_sensor", () -> new LaserIRSensor((new Item.Properties())
                 .stacksTo(1)
                 .rarity(Rarity.COMMON)));
@@ -66,6 +68,7 @@ public class RegistryItems {
                 .stacksTo(1)
                 .rarity(Rarity.COMMON)));*/
 
+        FIGHTERHELM_HELMET = ITEMS.register("fighterhelm_helmet", FighterhelmItem::new);
     }
 
     public static final HashMap<String, ItemEntry<MissileMediumcannonRoundItem>> MEDIUM_BARREL_LAUNCHED_MISSILES = new HashMap<>();

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import net.croc.mw_peripherals.blocks.LWSBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -18,12 +20,13 @@ import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 public class LWSPeripheral implements IPeripheral {
     private final Level level;
-
     private final BlockPos pos;
+    private final LWSBlockEntity lws;
 
     public LWSPeripheral(Level level, BlockPos blockPos) {
       this.level = level;
       this.pos = blockPos;
+      this.lws = (LWSBlockEntity) level.getBlockEntity(pos);
     }
 
     @Nonnull
@@ -37,8 +40,6 @@ public class LWSPeripheral implements IPeripheral {
 
     @LuaFunction
     public boolean isTriggered() {
-        Vec3 pos = VSGameUtilsKt.toWorldCoordinates(this.level, this.pos.getCenter());
-        Optional<LaserPointEntity> laser = LaserPointEntity.findUncoded(this.level, pos, new Vec3(0,1,0), 10f, 180f);
-        return laser.isPresent();
+        return lws.isTriggered();
     }
 }

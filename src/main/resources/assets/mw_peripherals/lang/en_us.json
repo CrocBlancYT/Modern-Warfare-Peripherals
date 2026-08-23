@@ -8,6 +8,8 @@
   "block.mw_peripherals.jet_engine": "Jet Engine",
   "block.mw_peripherals.lws": "Laser Warning system",
 
+  "item.mw_peripherals.fighterhelm_helmet": "Pilot Helmet",
+
   "block.mw_peripherals.aps": "APS 'Sentry'",
   "block.mw_peripherals.trophy": "APS 'Trophy'",
   "block.mw_peripherals.iron_fist": "APS 'Iron Fist LC'",
@@ -29,6 +31,11 @@
   "key.mw_peripherals.mclos_left" : "Guide MCLOS Left",
   "key.mw_peripherals.mclos_right" : "Guide MCLOS Right",
 
+  "key.mw_peripherals.hmd_flare" : "HMD: Pop Flare",
+  "key.mw_peripherals.hmd_toggle_scope" : "HMD: Toggle Scope",
+  "key.mw_peripherals.hmd_cycle_weapons" : "HMD: Cycle Weapons",
+  "key.mw_peripherals.hmd_fire_selected_weapon" : "HMD: Fire Selected Weapon",
+
   "block.mw_peripherals.barrel_launched_spike_lr2" : "Spike LR2",
   "block.mw_peripherals.barrel_launched_tow2b" : "BGM-71F TOW 2B",
   "block.mw_peripherals.barrel_launched_9k112_kobra" : "9K112 Kobra",
@@ -36,5 +43,19 @@
   "block.mw_peripherals.radar_module": "MSA Gimballed Radar K1",
   "block.mw_peripherals.rwr": "Radar Warning Receiver K1",
   "block.mw_peripherals.aesa_fixed_radar": "AESA Fixed Radar K1",
-  "block.mw_peripherals.aesa_panel": "AESA Panel"
+  "block.mw_peripherals.aesa_panel": "AESA Panel",
+
+  "block.mw_peripherals.glass_15dark": "Gray Glass (15%)",
+  "block.mw_peripherals.glass_50dark": "Gray Glass (50%)",
+  "block.mw_peripherals.glass_50orange": "Orange Glass (50%)",
+
+  "block.mw_peripherals.rocket_pod_4": "LAU-10/A Rocket Pod (Zuni MK32)",
+  "block.mw_peripherals.rocket_pod_7": "LAU-68 F/A Rocket Pod (Hydra 70 / MK4 FFAR / APKWS)",
+  "block.mw_peripherals.rocket_pod_19": "LAU-3/A Rocket Pod (Hydra 70 / MK4 FFAR / APKWS)",
+
+  "subtitle.mw_peripherals.missile_launch" : "Missile launch",
+  "subtitle.mw_peripherals.breech_open" : "Breech opens",
+  "subtitle.mw_peripherals.breech_close" : "Breech closes",
+  "subtitle.mw_peripherals.fire_rotary" : "Rotary fires",
+  "subtitle.mw_peripherals.fire_heavy_autocannon" : "Heavy autocannon fires"
 }

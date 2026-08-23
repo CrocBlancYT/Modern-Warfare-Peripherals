@@ -13,17 +13,14 @@
     "MixinThrusterBlock",
     "MixinRhaModBlocks",
 
+    "MixinQuickfiringBreechBlock",
+    "MixinMountedRotarycannonContraption",
+    "MixinMountedHeavyAutocannonContraption",
+    "MixinCannonMountBlockEntity",
+
     "vpb.MixinGunItem",
     "vpb.MixinCustomExplosion",
     "vpb.MixinHitScan",
-
-    "vista.MixinLevelRendererVanilla",
-    "vista.MixinCamera",
-    "vista.VistaLevelRendererMixin",
-    "vista.ViewFinderControllerMixin",
-    "vista.ViewFinderAccessMixin",
-    "vista.LevelRendererCameraStateMixin",
-    "vista.LODMixin",
 
     "tallyho.IRSeekerAccessor",
     "tallyho.LaserSeekerAccessor",
@@ -36,6 +33,15 @@
     "tallyho.MixinGameRenderer",
     "tallyho.MixinEntityRenderDispatcher"
   ],
-  "client": [],
+  "client": [
+    "vista.MixinCamera",
+    "vista.MixinLevelRendererVanilla",
+    "vista.LevelRendererCameraStateMixin",
+    "vista.LODMixin",
+    "vista.ViewFinderAccessMixin",
+    "vista.ViewFinderControllerMixin",
+    "vista.VistaLevelRendererMixin",
+    "tallyho.MixinFogRenderer"
+  ],
   "server": []
 }

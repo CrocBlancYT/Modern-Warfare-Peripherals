@@ -3,13 +3,16 @@ package net.croc.mw_peripherals.blocks;
 import net.croc.mw_peripherals.RegistryBlockEntities;
 import net.croc.mw_peripherals.integration.tallyho.tracker.RadTracker.Angle;
 import net.croc.mw_peripherals.utils.IRadarBlockEntity;
+import net.croc.mw_peripherals.utils.VSShipComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -107,10 +110,15 @@ public class RadarPanelBlockEntity extends IRadarBlockEntity {
         broadcastPanelSize(panels, size);
     }
 
-
     public static void tick(Level level, BlockPos pos, BlockState state, RadarPanelBlockEntity radar) {
         if (level.getBestNeighborSignal(pos) > 0) {
             radar.scan();
         }
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
+        VSShipComponents.subscribe(this);
     }
 }

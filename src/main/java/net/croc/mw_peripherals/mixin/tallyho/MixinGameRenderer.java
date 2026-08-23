@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinGameRenderer {
     @Inject(method = {"getDepthFar"}, at = {@At("HEAD")}, cancellable = true)
     private void moreFar(CallbackInfoReturnable<Float> cir) {
-        cir.setReturnValue(3000f);
+        cir.setReturnValue(10000.0F);
     }
 }

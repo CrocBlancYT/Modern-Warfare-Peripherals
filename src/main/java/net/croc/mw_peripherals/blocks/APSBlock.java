@@ -1,6 +1,5 @@
 package net.croc.mw_peripherals.blocks;
 
-
 import com.simibubi.create.AllItems;
 import net.croc.mw_peripherals.RegistryBlockEntities;
 import net.croc.mw_peripherals.RegistryItems;
@@ -30,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -40,12 +40,15 @@ import java.util.List;
 
 public class APSBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     private final APSBlockEntry entry;
 
     public APSBlock(BlockBehaviour.Properties properties, APSBlockEntry entry) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, net.minecraft.core.Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, net.minecraft.core.Direction.NORTH)
+                .setValue(LIT, false));
         this.entry = entry;
     }
 
@@ -56,6 +59,7 @@ public class APSBlock extends Block implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+        builder.add(LIT); // todo : test
     }
 
     @Override

@@ -2,6 +2,7 @@ package net.croc.mw_peripherals.blocks;
 
 import edn.stratodonut.tallyho.entity.FlareEntity;
 import net.croc.mw_peripherals.RegistryBlockEntities;
+import net.croc.mw_peripherals.utils.VSShipComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
@@ -49,6 +51,7 @@ public class FlareDispenserBlockEntity extends BlockEntity {
         if (tag.contains("flares")) {
             this.flares = tag.getInt("flares");
         }
+        VSShipComponents.subscribe(this);
     }
 
     public int getFlares() {

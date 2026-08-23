@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import edn.stratodonut.tallyho.camera.entity.RemoteStationEntity;
 import edn.stratodonut.tallyho.camera.entity.TargetingPodEntity;
 import edn.stratodonut.tallyho.entity.MountedMissileEntity;
+import net.croc.mw_peripherals.blocks.WPMBlockEntity;
 import net.croc.mw_peripherals.integration.computercraft.LuaCROWS;
 import net.croc.mw_peripherals.integration.computercraft.LuaOrdnance;
 import net.croc.mw_peripherals.integration.computercraft.LuaTGP;
@@ -23,10 +24,12 @@ public class WeaponsManagerPeripheral implements IPeripheral {
 
     private final Level level;
     private final BlockPos pos;
+    private final WPMBlockEntity wpm;
 
     public WeaponsManagerPeripheral(Level level, BlockPos blockPos) {
         this.level = level;
         this.pos = blockPos;
+        this.wpm = (WPMBlockEntity) this.level.getBlockEntity(blockPos);
     }
 
     @Nonnull
@@ -41,18 +44,10 @@ public class WeaponsManagerPeripheral implements IPeripheral {
     @LuaFunction
     public final ArrayList<Object> scan() {
         ArrayList<Object> output = new ArrayList<>();
-        AABB box = (new AABB(pos)).inflate(7.0D);
-        List<Entity> entities = level.getEntities(null, box);
 
-        entities.forEach(entity -> {
-            if (entity instanceof MountedMissileEntity missile && !missile.isDeployed()) {
-                output.add(new LuaOrdnance(missile, this.level, this.pos));
-            } else if (entity instanceof RemoteStationEntity crows) {
-                output.add(new LuaCROWS(crows, this.level, this.pos));
-            } else if (entity instanceof TargetingPodEntity tgp) {
-                output.add(new LuaTGP(tgp, this.level, this.pos));
-            }
-        });
+        for (WPMBlockEntity.Weapon<?> weapon : this.wpm.scanForWeapons()) {
+            output.add(weapon.asLua(level, pos));
+        }
 
         return output;
     }

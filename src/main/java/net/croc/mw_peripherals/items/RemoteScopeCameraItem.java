@@ -3,6 +3,7 @@ package net.croc.mw_peripherals.items;
 import com.simibubi.create.CreateClient;
 import edn.stratodonut.tallyho.camera.block.ScopeBlock;
 import edn.stratodonut.tallyho.camera.block.ThermalsBlock;
+import edn.stratodonut.tallyho.camera.item.RemoteCameraItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

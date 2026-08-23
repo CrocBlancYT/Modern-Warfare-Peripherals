@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 
-public class GyroActor implements ShipForcesInducer {
+public class  GyroActor implements ShipForcesInducer {
     private final HashMap<BlockPos, Controller> controllers;
 
     public GyroActor() {

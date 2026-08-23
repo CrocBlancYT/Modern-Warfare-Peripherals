@@ -1,5 +1,7 @@
 package net.croc.mw_peripherals.integration.tallyho.pod;
 
+import edn.stratodonut.tallyho.AllEntities;
+import edn.stratodonut.tallyho.camera.entity.FlexibleSeatEntity;
 import edn.stratodonut.tallyho.entity.MountedMissileEntity;
 import java.util.List;
 
@@ -80,22 +82,25 @@ public class RocketPod extends PodComponent {
         Ship s = VSGameUtilsKt.getShipMountedTo(e);
         if (e.level() instanceof ServerLevel serverLevel && s != null) {
             Vec3 spawnPosition = e.getEyePosition();
-            Vec3 lookInShip = e.getLookAngle();
             Vec3 lookInWorld = VSUtils.toWorldDirection(e.level(), e.getLookAngle(), e.position());
-
             Vec3 randomOffset = new Vec3(random.nextDouble(), random.nextDouble(), random.nextDouble()).scale(0.6);
 
-
-            MountedMissileEntity missile = entry.spawn(serverLevel, spawnPosition.add(randomOffset),
-                    Direction.getNearest(lookInShip.x, 0.0D, lookInShip.z).toYRot());
-
+            MountedMissileEntity missile = entry.factory.create(AllEntities.MISSILE_ENTITY.get(), serverLevel, entry.id, entry.getItemEntry().get());
+            missile.setPos(spawnPosition.add(randomOffset));
             missile.lookAt(EntityAnchorArgument.Anchor.FEET, missile.position().add(lookInWorld));
+            missile.setXRot(missile.xRotO);
+            missile.setYRot(missile.yRotO);
+            serverLevel.addFreshEntity(missile);
+            FlexibleSeatEntity.sitDown(serverLevel, spawnPosition, missile);
             missile.tick();
             missile.launch();
+            if (missile.getGuidance() != null) {
+                missile.getGuidance().activateSeeker();
+            }
 
             CBCUtils.playBlastLikeSoundOnServer(serverLevel,
                     spawnPosition.x, spawnPosition.y, spawnPosition.z,
-                    RegistrySounds.MISSILE_LAUNCH.get(),
+                    RegistrySounds.MISSILE_LAUNCH.getMainEvent(),
                     SoundSource.BLOCKS,  12.0F, 1.0F, 5.0F);
         }
 

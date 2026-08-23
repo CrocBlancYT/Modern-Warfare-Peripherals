@@ -1,0 +1,68 @@
+{
+    "missile_launch": {
+        "sounds": [
+        {
+            "name": "mw_peripherals:missile_launch"
+        }
+        ],
+        "subtitle": "subtitle.mw_peripherals.missile_launch"
+    },
+    "breech_open": {
+        "sounds": [
+        {
+            "name": "mw_peripherals:breech_open",
+            "volume" : 0.9
+        },
+        {
+            "name": "mw_peripherals:breech_open1",
+            "volume" : 0.9
+        },
+        {
+            "name": "mw_peripherals:breech_open2",
+            "volume" : 0.9
+        },
+        {
+            "name": "mw_peripherals:breech_open3",
+            "volume" : 0.9
+        }
+        ],
+        "subtitle": "subtitle.mw_peripherals.breech_open"
+    },
+    "breech_close": {
+        "sounds": [
+        {
+            "name": "mw_peripherals:breech_close",
+            "volume" : 0.9
+        },
+        {
+            "name": "mw_peripherals:breech_close1",
+            "volume" : 0.9
+        },
+        {
+            "name": "mw_peripherals:breech_close2",
+            "volume" : 0.9
+        },
+        {
+            "name": "mw_peripherals:breech_close3",
+            "volume" : 0.9
+        }
+        ],
+        "subtitle": "subtitle.mw_peripherals.breech_close"
+    },
+    "fire_rotary": {
+        "sounds": [
+        {
+            "name": "mw_peripherals:fire_rotary"
+        }
+        ],
+        "subtitle": "subtitle.mw_peripherals.fire_rotary"
+    },
+    "fire_heavy_autocannon": {
+        "sounds": [
+        {
+            "name": "mw_peripherals:fire_heavy_autocannon"
+        }
+        ],
+        "subtitle": "subtitle.mw_peripherals.fire_heavy_autocannon"
+    }
+}

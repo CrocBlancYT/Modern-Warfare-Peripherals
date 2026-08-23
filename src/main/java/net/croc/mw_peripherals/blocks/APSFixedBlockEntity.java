@@ -33,7 +33,7 @@ public class APSFixedBlockEntity extends BlockEntity {
 
     private final int DEFAULT_COLOR = 0xFFFFFF;
 
-    private int color = -1;
+    private int color = DEFAULT_COLOR;
     public final APSFixedBlockEntity.CachedVoxelShape shape = new APSFixedBlockEntity.CachedVoxelShape();
 
     public APSBlockEntry entry;
@@ -195,6 +195,7 @@ public class APSFixedBlockEntity extends BlockEntity {
                 this.getBlockState(), 2);
     }
 
+    @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putInt("charges", this.charges);
@@ -205,6 +206,7 @@ public class APSFixedBlockEntity extends BlockEntity {
         if (savedColor != -1) tag.putInt("color", savedColor);
     }
 
+    @Override
     public void load(CompoundTag tag) {
         super.load(tag);
         if (tag.contains("charges"))
@@ -220,23 +222,27 @@ public class APSFixedBlockEntity extends BlockEntity {
         }
     }
 
+    @Override
     @Nullable
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
         if (tag != null)
             this.load(tag);
     }
 
+    @Override
     public @NotNull CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
         this.saveAdditional(tag);
         return tag;
     }
 
+    @Override
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
         this.load(tag);

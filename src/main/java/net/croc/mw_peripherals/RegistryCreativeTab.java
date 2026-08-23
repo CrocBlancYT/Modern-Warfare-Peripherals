@@ -24,6 +24,7 @@ public class RegistryCreativeTab {
                         output.accept(RegistryItems.APS_CHARGE.get());
                         output.accept(RegistryItems.LASER_FUZE.get());
                         output.accept(RegistryItems.REMOTE_FUZE.get());
+                        output.accept(RegistryItems.FIGHTERHELM_HELMET.get());
                         
                         // output.accept(RegistryBlocks.SYNCED_MECHANICAL_BEARING.asItem());
                     })

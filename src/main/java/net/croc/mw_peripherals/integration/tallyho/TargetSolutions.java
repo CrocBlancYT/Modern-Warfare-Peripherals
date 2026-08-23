@@ -1,6 +1,5 @@
 package net.croc.mw_peripherals.integration.tallyho;
 
-import com.ibm.icu.impl.CollectionSet;
 import edn.stratodonut.tallyho.missile.Target;
 import net.croc.mw_peripherals.integration.tallyho.tracker.AerialTracker;
 import net.croc.mw_peripherals.integration.tallyho.tracker.RadTracker.Angle;
@@ -15,11 +14,8 @@ import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
-
 
 public class TargetSolutions {
 
@@ -29,8 +25,7 @@ public class TargetSolutions {
     public static final float DOPPLER_ALTITUDE = 10f;
     public static final float DOPPLER_RELATIVE_SPEED = 1f;
 
-
-    private final CollectionSet<Target<?>> targets;
+    private final HashSet<Target<?>> targets;
     private final Level level;
     private Target<?> source;
     private final Cone solutionCone;
@@ -43,7 +38,7 @@ public class TargetSolutions {
     }
 
     private TargetSolutions(List<Target<?>> targets, Cone cone, Level level, @Nullable Target<?> origin) {
-        this.targets = new CollectionSet<>(targets);
+        this.targets = new HashSet<>();
         this.level = level;
         this.solutionCone = cone;
 

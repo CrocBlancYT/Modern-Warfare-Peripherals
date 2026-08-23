@@ -34,7 +34,7 @@ public class ARHSeeker extends GuidanceComponent {
         return this.properties;
     }
 
-    public record SeekerProperties(int seeker_fov, int seeker_range, int lead_coefficient, float max_G) {
+    public record SeekerProperties(int seeker_fov, int seeker_range, int lead_coefficient, float max_G) { // todo: add gimbal fov
         public void appendHoverText(List<Component> components) {
             components.add(Component.literal("Guidance: ARH")
                     .setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA)));

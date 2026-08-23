@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import edn.stratodonut.tallyho.missile.Target;
+import net.croc.mw_peripherals.blocks.RWRBlockEntity;
 import net.croc.mw_peripherals.integration.computercraft.LuaUtils;
 import net.croc.mw_peripherals.integration.tallyho.BlockTarget;
 import net.croc.mw_peripherals.integration.tallyho.RadarSource;
@@ -25,15 +26,18 @@ import java.util.HashMap;
 public class RWRPeripheral implements IPeripheral {
     private final Level level;
     private final BlockPos pos;
+    private final RWRBlockEntity rwr;
 
     public final RadarSource.Receiver receiver;
 
     public RWRPeripheral(Level level, BlockPos blockPos) {
         this.level = level;
         this.pos = blockPos;
+        this.rwr = (RWRBlockEntity) level.getBlockEntity(blockPos);
 
-        Target<?> target = BlockTarget.getTarget(this.level,this.pos);
-        this.receiver = new RadarSource.Receiver(this.level, target, (float) maxRange);
+        assert rwr != null;
+        Target<?> target = rwr.asTarget();
+        this.receiver = rwr.receiver();
     }
 
     @Nonnull
@@ -43,15 +47,13 @@ public class RWRPeripheral implements IPeripheral {
 
     public boolean equals(@Nullable IPeripheral iPeripheral) { return false; }
 
-    public static final double maxRange = 500;
-
     @LuaFunction
     public ArrayList<HashMap<String, Object>> receive() {
         ArrayList<HashMap<String, Object>> output = new ArrayList<>();
 
         Vec3 from = receiver.origin().position();
 
-        RadTracker.passive(receiver, this.pos, new Vec3(0,1,0).scale(maxRange), RadTracker.Angle.max()).resolve().forEach((target) -> {
+        rwr.scan().resolve().forEach((target) -> {
             HashMap<String, Object> luaResult = new HashMap<>();
 
             Vec3 to = target.position();
@@ -70,6 +72,6 @@ public class RWRPeripheral implements IPeripheral {
 
     @LuaFunction
     public double getMaxRange() {
-        return maxRange;
+        return rwr.maxRange();
     }
 }

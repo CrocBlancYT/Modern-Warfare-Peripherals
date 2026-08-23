@@ -67,6 +67,8 @@ public class RHAColors {
         };
 
         id = id.replace("rha:", "");
+        id = id.replace("rhaplus:", "");
+        id = id.replaceAll(":", "");
         id = id.replaceAll("_", "");
 
         Color color = cached_colors.get(id);

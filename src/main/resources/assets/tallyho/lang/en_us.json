@@ -45,11 +45,14 @@
     "item.tallyho.r73archer" : "Vympel R-73",
     "item.tallyho.r73e" : "Vympel R-73E",
 
-    "item.tallyho.r511" : "R511",
-    "item.tallyho.r530" : "R530",
+    "item.tallyho.r511" : "Matra R.511",
+    "item.tallyho.r530" : "Matra R.530",
+    "item.tallyho.r530e" : "Matra R.530E",
     "item.tallyho.super530d" : "Super 530D",
     "item.tallyho.r550_magic1" : "R550 Magic I",
     "item.tallyho.r550_magic2" : "R550 Magic II",
+    "item.tallyho.mica_ir" : "MICA-IR",
+    "item.tallyho.mica_em" : "MICA-RF/EM",
 
     "item.tallyho.aa20" : "AA-20 Nord",
     "item.tallyho.as20" : "AS-20 Nord",
@@ -64,21 +67,35 @@
     "item.tallyho.9k112_kobra" : "9K112 Kobra",
 
     "item.tallyho.aim9b" : "AIM-9B",
+    "item.tallyho.aim9c" : "AIM-9C",
+    "item.tallyho.aim9j" : "AIM-9J",
+    "item.tallyho.aim9lima_training" : "AIM-9L (Gray / Training)",
     "item.tallyho.aim9lima" : "AIM-9L (Gray)",
     "item.tallyho.aim9lima_tan" : "AIM-9L (Tan)",
     "item.tallyho.aim9mike" : "AIM-9M",
     "item.tallyho.aim9x" : "AIM-9X Block II",
 
     "item.tallyho.iris_t" : "AIM-2000 IRIS-T",
-    "item.tallyho.mica_em" : "MICA-RF/EM",
+
+    "item.tallyho.aim120c" : "AIM-120C AMRAAM",
 
     "item.tallyho.hvar" : "HVAR",
     "item.tallyho.type23sneb" : "Type 23 SNEB",
+    "item.tallyho.hydra70" : "Hydra 70",
+    "item.tallyho.mk4_ffar" : "MK4 FFAR 'Mighty Mouse'",
+    "item.tallyho.zuni_mk32" : "Zuni MK32",
 
     "item.tallyho.gun_pod" : "Mounted Gun Pod",
     "item.tallyho.fuel_tank" : "Paper Drop-Tank (Diesel)",
     "item.tallyho.type23_rocket_pod" : "Matra Type 116 Rocket Pod",
 
     "item.tallyho.agm65" : "AGM-65 'Maverick'",
-    "item.tallyho.gbu39" : "GBU-39 SDB"
+    "item.tallyho.gbu39" : "GBU-39 SDB",
+
+    "subtitle.tallyho.heli" : "Helicopter rotor",
+    "subtitle.tallyho.bullet.whizz" : "Bullet whizzs",
+    "subtitle.tallyho.bullet.impact" : "Bullet impacts",
+    "subtitle.tallyho.missile.launch" : "Missile launchs",
+    "subtitle.tallyho.missile.seek" : "Seeking",
+    "subtitle.tallyho.missile.lock" : "Locking"
 }
